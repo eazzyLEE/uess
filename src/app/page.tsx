@@ -1,103 +1,203 @@
-import Image from "next/image";
+'use client'
 
-export default function Home() {
+import { useState } from 'react'
+import { Input } from '@/components/ui/Input'
+import { TextArea } from '@/components/ui/TextArea'
+import { Select } from '@/components/ui/Select'
+import { RadioGroup } from '@/components/ui/RadioGroup'
+import { Modal } from '@/components/ui/Modal'
+
+export default function Form() {
+  const [formData, setFormData] = useState({
+    type: '',
+    fullName: '',
+    email: '',
+    phone: '',
+    gender: '',
+    age: '',
+    interests: '',
+    school: '',
+    yearOfGraduation: '',
+    country: '',
+    partnerMessage: ''
+  })
+  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [showModal, setShowModal] = useState(false)
+
+  const schools = [
+    'Select School',
+    'Springfield High School',
+    'Central High School',
+    'Washington High School',
+    'Lincoln Academy'
+  ]
+
+  const genderOptions = [
+    'Select Gender',
+    'Male',
+    'Female',
+  ]
+  const statusOptions = [
+    { label: 'Student', value: 'student' },
+    { label: 'Alumni', value: 'alumni' }
+  ]
+
+  const ageOptions = [
+    '25 - 35',
+    '36 - 45',
+    '46 - 60',
+    '61 and above'
+  ]
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    const newErrors: Record<string, string> = {}
+
+    if (!formData.type) newErrors.type = 'Please select your status'
+    if (!formData.fullName.trim()) newErrors.fullName = 'Full name is required'
+    if (!formData.interests.trim()) newErrors.interests = 'Please enter your interests'
+    if (!formData.school || formData.school === 'Select School') newErrors.school = 'Please select your school'
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors)
+      return
+    }
+
+    setShowModal(true)
+    setFormData({
+      type: '',
+      fullName: '',
+      email: '',
+      age: '',
+      gender: '',
+      phone: '',
+      interests: '',
+      school: '',
+      yearOfGraduation: '',
+      country: '',
+      partnerMessage: ""
+    })
+    setErrors({})
+  }
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
+        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Student/Alumni Form</h2>
+        
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <RadioGroup
+            name="type"
+            options={statusOptions}
+            value={formData.type}
+            onChange={(value) => setFormData({...formData, type: value})}
+            error={errors.type}
+            label="Status"
+          />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Input
+            type="text"
+            placeholder="Full Name"
+            value={formData.fullName}
+            onChange={(e) => setFormData({...formData, fullName: e.target.value})}
+            error={errors.fullName}
+            label="Full Name"
+          />
+
+          <Select
+            options={genderOptions}
+            value={formData.gender}
+            onChange={(e) => setFormData({...formData, gender: e.target.value})}
+            error={errors.gender}
+            label="Gender"
+          />
+
+          <Select
+            options={ageOptions}
+            value={formData.age}
+            onChange={(e) => setFormData({...formData, age: e.target.value})}
+            error={errors.age}
+            label="Age"
+          />
+
+          <Input
+            type="email"
+            placeholder="Email Address"
+            value={formData.email}
+            onChange={(e) => setFormData({...formData, email: e.target.value})}
+            error={errors.email}
+            label="Email Address"
+          />
+
+          <Input
+            type="tel"
+            placeholder="Phone Number"
+            value={formData.phone}
+            onChange={(e) => setFormData({...formData, phone: e.target.value})}
+            error={errors.phone}
+            label="Phone Number"
+          />
+
+          <TextArea
+            placeholder="Areas of Interest"
+            value={formData.interests}
+            onChange={(e) => setFormData({...formData, interests: e.target.value})}
+            error={errors.interests}
+            rows={3}
+            label="Areas of Interest"
+          />
+
+          <Select
+            options={schools}
+            value={formData.school}
+            onChange={(e) => setFormData({...formData, school: e.target.value})}
+            error={errors.school}
+            label="School"
+          />
+
+          <Input
+            type="text"
+            placeholder="Year of Graduation"
+            value={formData.yearOfGraduation}
+            onChange={(e) => setFormData({...formData, yearOfGraduation: e.target.value})}
+            error={errors.yearOfGraduation}
+            label="Year of Graduation"
+          />
+
+          <Input
+            type="text"
+            placeholder="Country of Residence"
+            value={formData.country}
+            onChange={(e) => setFormData({...formData, country: e.target.value})}
+            error={errors.currentJob}
+            label="Country of Residence"
+          />
+
+          <TextArea
+            placeholder=""
+            value={formData.partnerMessage}
+            onChange={(e) => setFormData({...formData, partnerMessage: e.target.value})}
+            error={errors.message}
+            rows={3}
+            label="How would you like to partner with us?"
+          />
+
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+            Submit
+          </button>
+        </form>
+      </div>
+
+      <Modal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        title="Success!"
+      >
+        <p className="mb-4">Your information has been submitted successfully.</p>
+      </Modal>
     </div>
-  );
+  )
 }
