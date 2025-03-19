@@ -6,6 +6,13 @@ import { TextArea } from '@/components/ui/TextArea'
 import { Select } from '@/components/ui/Select'
 import { RadioGroup } from '@/components/ui/RadioGroup'
 import { Modal } from '@/components/ui/Modal'
+import { Poppins } from 'next/font/google'
+import Navbar from '@/components/ui/Navbar'
+
+const poppins = Poppins({
+  weight: ['400', '600', '700'],
+  subsets: ['latin'],
+})
 
 export default function Form() {
   const [formData, setFormData] = useState({
@@ -81,123 +88,127 @@ export default function Form() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Student/Alumni Form</h2>
-        
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <RadioGroup
-            name="type"
-            options={statusOptions}
-            value={formData.type}
-            onChange={(value) => setFormData({...formData, type: value})}
-            error={errors.type}
-            label="Status"
-          />
+    <div className={poppins.className}>
+      <Navbar />
 
-          <Input
-            type="text"
-            placeholder="Full Name"
-            value={formData.fullName}
-            onChange={(e) => setFormData({...formData, fullName: e.target.value})}
-            error={errors.fullName}
-            label="Full Name"
-          />
+      <div className="min-h-screen bg-gray-100 pt-24 pb-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
+          <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Student/Alumni Form</h2>
+          
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <RadioGroup
+              name="type"
+              options={statusOptions}
+              value={formData.type}
+              onChange={(value) => setFormData({...formData, type: value})}
+              error={errors.type}
+              label="Status"
+            />
 
-          <Select
-            options={genderOptions}
-            value={formData.gender}
-            onChange={(e) => setFormData({...formData, gender: e.target.value})}
-            error={errors.gender}
-            label="Gender"
-          />
+            <Input
+              type="text"
+              placeholder="Full Name"
+              value={formData.fullName}
+              onChange={(e) => setFormData({...formData, fullName: e.target.value})}
+              error={errors.fullName}
+              label="Full Name"
+            />
 
-          <Select
-            options={ageOptions}
-            value={formData.age}
-            onChange={(e) => setFormData({...formData, age: e.target.value})}
-            error={errors.age}
-            label="Age"
-          />
+            <Select
+              options={genderOptions}
+              value={formData.gender}
+              onChange={(e) => setFormData({...formData, gender: e.target.value})}
+              error={errors.gender}
+              label="Gender"
+            />
 
-          <Input
-            type="email"
-            placeholder="Email Address"
-            value={formData.email}
-            onChange={(e) => setFormData({...formData, email: e.target.value})}
-            error={errors.email}
-            label="Email Address"
-          />
+            <Select
+              options={ageOptions}
+              value={formData.age}
+              onChange={(e) => setFormData({...formData, age: e.target.value})}
+              error={errors.age}
+              label="Age"
+            />
 
-          <Input
-            type="tel"
-            placeholder="Phone Number"
-            value={formData.phone}
-            onChange={(e) => setFormData({...formData, phone: e.target.value})}
-            error={errors.phone}
-            label="Phone Number"
-          />
+            <Input
+              type="email"
+              placeholder="Email Address"
+              value={formData.email}
+              onChange={(e) => setFormData({...formData, email: e.target.value})}
+              error={errors.email}
+              label="Email Address"
+            />
 
-          <TextArea
-            placeholder="Areas of Interest"
-            value={formData.interests}
-            onChange={(e) => setFormData({...formData, interests: e.target.value})}
-            error={errors.interests}
-            rows={3}
-            label="Areas of Interest"
-          />
+            <Input
+              type="tel"
+              placeholder="Phone Number"
+              value={formData.phone}
+              onChange={(e) => setFormData({...formData, phone: e.target.value})}
+              error={errors.phone}
+              label="Phone Number"
+            />
 
-          <Select
-            options={schools}
-            value={formData.school}
-            onChange={(e) => setFormData({...formData, school: e.target.value})}
-            error={errors.school}
-            label="School"
-          />
+            <TextArea
+              placeholder="Areas of Interest"
+              value={formData.interests}
+              onChange={(e) => setFormData({...formData, interests: e.target.value})}
+              error={errors.interests}
+              rows={3}
+              label="Areas of Interest"
+            />
 
-          <Input
-            type="text"
-            placeholder="Year of Graduation"
-            value={formData.yearOfGraduation}
-            onChange={(e) => setFormData({...formData, yearOfGraduation: e.target.value})}
-            error={errors.yearOfGraduation}
-            label="Year of Graduation"
-          />
+            <Select
+              options={schools}
+              value={formData.school}
+              onChange={(e) => setFormData({...formData, school: e.target.value})}
+              error={errors.school}
+              label="School"
+            />
 
-          <Input
-            type="text"
-            placeholder="Country of Residence"
-            value={formData.country}
-            onChange={(e) => setFormData({...formData, country: e.target.value})}
-            error={errors.currentJob}
-            label="Country of Residence"
-          />
+            <Input
+              type="text"
+              placeholder="Year of Graduation"
+              value={formData.yearOfGraduation}
+              onChange={(e) => setFormData({...formData, yearOfGraduation: e.target.value})}
+              error={errors.yearOfGraduation}
+              label="Year of Graduation"
+            />
 
-          <TextArea
-            placeholder=""
-            value={formData.partnerMessage}
-            onChange={(e) => setFormData({...formData, partnerMessage: e.target.value})}
-            error={errors.message}
-            rows={3}
-            label="How would you like to partner with us?"
-          />
+            <Input
+              type="text"
+              placeholder="Country of Residence"
+              value={formData.country}
+              onChange={(e) => setFormData({...formData, country: e.target.value})}
+              error={errors.currentJob}
+              label="Country of Residence"
+            />
 
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors"
-          >
-            Submit
-          </button>
-        </form>
+            <TextArea
+              placeholder=""
+              value={formData.partnerMessage}
+              onChange={(e) => setFormData({...formData, partnerMessage: e.target.value})}
+              error={errors.message}
+              rows={3}
+              label="How would you like to partner with us?"
+            />
+
+            <button
+              type="submit"
+              className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors"
+            >
+              Submit
+            </button>
+          </form>
+        </div>
+
+        <Modal
+          isOpen={showModal}
+          onClose={() => setShowModal(false)}
+          title="Success!"
+        >
+          <p className="mb-4">Your information has been submitted successfully.</p>
+        </Modal>
       </div>
-
-      <Modal
-        isOpen={showModal}
-        onClose={() => setShowModal(false)}
-        title="Success!"
-      >
-        <p className="mb-4">Your information has been submitted successfully.</p>
-      </Modal>
     </div>
   )
 }
