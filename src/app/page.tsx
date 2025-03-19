@@ -56,6 +56,8 @@ export default function Form() {
     '61 and above'
   ]
 
+  const isAlumni = formData.type === 'alumni'
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const newErrors: Record<string, string> = {}
@@ -91,7 +93,7 @@ export default function Form() {
     <div className={poppins.className}>
       <Navbar />
 
-      <div className="min-h-screen bg-gray-100 pt-24 pb-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-gradient-to-br from-blue-100 via-white to-purple-100 pt-24 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
           <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Student/Alumni Form</h2>
           
@@ -174,23 +176,28 @@ export default function Form() {
               label="Year of Graduation"
             />
 
-            <Input
-              type="text"
-              placeholder="Country of Residence"
-              value={formData.country}
-              onChange={(e) => setFormData({...formData, country: e.target.value})}
-              error={errors.currentJob}
-              label="Country of Residence"
-            />
+            {isAlumni ? (
+              <div>
+                <Input
+                  type="text"
+                  placeholder="Country of Residence"
+                  value={formData.country}
+                  onChange={(e) => setFormData({...formData, country: e.target.value})}
+                  error={errors.currentJob}
+                  label="Country of Residence"
+                />
 
-            <TextArea
-              placeholder=""
-              value={formData.partnerMessage}
-              onChange={(e) => setFormData({...formData, partnerMessage: e.target.value})}
-              error={errors.message}
-              rows={3}
-              label="How would you like to partner with us?"
-            />
+                <TextArea
+                  placeholder=""
+                  value={formData.partnerMessage}
+                  onChange={(e) => setFormData({...formData, partnerMessage: e.target.value})}
+                  error={errors.message}
+                  rows={3}
+                  label="How would you like to partner with us?"
+                />
+              </div>
+            ) : <div />
+          }
 
             <button
               type="submit"
