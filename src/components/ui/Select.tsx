@@ -5,13 +5,17 @@ interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
 }
 
 export function Select({ options, error, label, ...props }: SelectProps) {
+  const isPlaceholderValue = props.value === ""
+  const textColor = isPlaceholderValue ? "text-gray-400" : "text-black"
+
   return (
     <div>
       {label && <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>}
       <select
         {...props}
-        className={`w-full p-2 border rounded-md ${error ? 'border-red-500' : 'border-gray-300'}`}
+        className={`w-full p-2 border ${textColor} rounded-md ${error ? 'border-red-500' : 'border-gray-300'}`}
       >
+        <option value="" disabled selected>Select an option</option>
         {options.map((option) => (
           <option key={option} value={option}>
             {option}
