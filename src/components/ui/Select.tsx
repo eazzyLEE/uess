@@ -2,9 +2,10 @@ interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   options: string[];
   error?: string;
   label?: string;
+  subtext?: string;
 }
 
-export function Select({ options, error, label, ...props }: SelectProps) {
+export function Select({ options, error, label, subtext, ...props }: SelectProps) {
   const isPlaceholderValue = props.value === ""
   const textColor = isPlaceholderValue ? "text-gray-400" : "text-black"
 
@@ -22,6 +23,7 @@ export function Select({ options, error, label, ...props }: SelectProps) {
           </option>
         ))}
       </select>
+      {!error && subtext && <p className="text-gray-500 text-xs mt-1">{subtext}</p>}
       {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
     </div>
   )

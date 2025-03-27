@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { Input } from '@/components/ui/Input'
-// import { TextArea } from '@/components/ui/TextArea'
 import { Select } from '@/components/ui/Select'
 import { Modal } from '@/components/ui/Modal'
 import { Poppins } from 'next/font/google'
@@ -21,13 +20,14 @@ export default function Students() {
     email: '',
     phone: '',
     gender: '',
-    age: '',
+    dateOfBirth: '',
     interests: '',
     school: '',
     yearOfGraduation: '',
     country: '',
     partnerMessage: '',
     career: '',
+    otherCareerPath: '',
     course: ''
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -37,17 +37,6 @@ export default function Students() {
     'Select Gender',
     'Male',
     'Female',
-  ]
-  // const statusOptions = [
-  //   { label: 'Student', value: 'student' },
-  //   { label: 'Alumni', value: 'alumni' }
-  // ]
-
-  const ageOptions = [
-    '25 - 35',
-    '36 - 45',
-    '46 - 60',
-    '61 and above'
   ]
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -69,7 +58,7 @@ export default function Students() {
       type: '',
       fullName: '',
       email: '',
-      age: '',
+      dateOfBirth: '',
       gender: '',
       phone: '',
       interests: '',
@@ -78,6 +67,7 @@ export default function Students() {
       country: '',
       partnerMessage: "",
       career: '',
+      otherCareerPath: '',
       course: ''
     })
     setErrors({})
@@ -95,7 +85,7 @@ export default function Students() {
 
             <Input
               type="text"
-              placeholder="Full name"
+              placeholder="Full name (Surname first)"
               value={formData.fullName}
               onChange={(e) => setFormData({...formData, fullName: e.target.value})}
               error={errors.fullName}
@@ -110,12 +100,13 @@ export default function Students() {
               label="Gender"
             />
 
-            <Select
-              options={ageOptions}
-              value={formData.age}
-              onChange={(e) => setFormData({...formData, age: e.target.value})}
-              error={errors.age}
-              label="Age"
+            <Input
+              type="date"
+              value={formData.dateOfBirth}
+              onChange={(e) => setFormData({...formData, dateOfBirth: e.target.value})}
+              error={errors.dateOfBirth}
+              label="Date of Birth"
+              max={"2014-01-01"}
             />
 
             <Input
@@ -136,15 +127,6 @@ export default function Students() {
               label="Phone Number"
             />
 
-            {/* <TextArea
-              placeholder="Areas of interest"
-              value={formData.interests}
-              onChange={(e) => setFormData({...formData, interests: e.target.value})}
-              error={errors.interests}
-              rows={3}
-              label="Areas of Interest"
-            /> */}
-
             <Select
               options={schools}
               value={formData.school}
@@ -153,22 +135,23 @@ export default function Students() {
               label="School"
             />
 
-            <Input
-              type="text"
-              placeholder="Year of graduation"
-              value={formData.yearOfGraduation}
-              onChange={(e) => setFormData({...formData, yearOfGraduation: e.target.value})}
-              error={errors.yearOfGraduation}
-              label="Year of Graduation"
-            />
-
             <Select
               options={careerOptions}
               value={formData.career}
               onChange={(e) => setFormData({...formData, career: e.target.value})}
               error={errors.career}
               label="What career path are you interested in?"
+              subtext="This will help us match you with the right mentor"
             />
+
+            {formData.career === "Other" && (
+              <Input
+                value={formData.otherCareerPath}
+                onChange={(e) => setFormData({...formData, otherCareerPath: e.target.value})}
+                error={errors.otherCareerPath}
+                label="Specify what career path are you interested in"
+              />
+            )}
 
             <Select
               options={courseOptions}
@@ -180,7 +163,7 @@ export default function Students() {
 
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors"
+              className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 mt-4 transition-colors"
             >
               Submit
             </button>
