@@ -45,7 +45,7 @@ export default function HomePage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
               </div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">Empower Your Journey.</h2>
+              <h2 className="text-2xl font-bold text-gray-800 mb-4">Empower Your Journey. Gain in-demand skills</h2>
               <div className="text-gray-600 mb-6 h-48 relative overflow-hidden">
                 <p className="opacity-0 md:opacity-100 group-hover:opacity-0 transition-opacity duration-300 absolute">
                   Ready to gain in-demand skills and build a solid financial foundation?
@@ -53,7 +53,6 @@ export default function HomePage() {
                 <p className="md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute">
                   Ready to gain in-demand skills, build a solid financial foundation, and connect with experienced mentors? 
                   UESS offers free courses, financial education, and personalized mentorship from alumni who understand your path. 
-                  Choose your courses, learn to manage your finances, and get connected with a mentor who will guide you to success. 
                   Your future starts here.
                 </p>
               </div>
@@ -80,7 +79,7 @@ export default function HomePage() {
                   Are you an alumnus of an institution UESS has visited or is planning to visit? 
                   Do you have at least three years of professional experience? Become a UESS mentor 
                   and make a lasting impact. Guide up to three students, share your career insights, 
-                  and give back to your alma mater. Your experience is invaluable – share it today.
+                  and give back to your alma mater.
                 </p>
               </div>
               <Link href="/mentors" className="block w-full">
