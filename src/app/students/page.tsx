@@ -6,7 +6,8 @@ import { Select } from '@/components/ui/Select'
 import { Modal } from '@/components/ui/Modal'
 import { Poppins } from 'next/font/google'
 import Navbar from '@/components/ui/Navbar'
-import { careerOptions, courseOptions, schools } from '../constants'
+import { careerOptions, courseOptions, productanufacturingOptions, schools, technologyOptions, whitelistedCourses } from '../constants'
+import { TextArea } from '@/components/ui/TextArea'
 
 const poppins = Poppins({
   weight: ['400', '600', '700'],
@@ -28,7 +29,9 @@ export default function Students() {
     partnerMessage: '',
     career: '',
     otherCareerPath: '',
-    course: ''
+    course: '',
+    otherCourse: '',
+    topic: ''
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [showModal, setShowModal] = useState(false)
@@ -68,7 +71,9 @@ export default function Students() {
       partnerMessage: "",
       career: '',
       otherCareerPath: '',
-      course: ''
+      course: '',
+      otherCourse: '',
+      topic: ''
     })
     setErrors({})
   }
@@ -160,6 +165,25 @@ export default function Students() {
               error={errors.course}
               label="What course are you interested in?"
             />
+
+            {formData.course === 'Other' && (
+              <TextArea
+                value={formData.otherCourse}
+                onChange={(e) => setFormData({...formData, otherCourse: e.target.value})}
+                error={errors.otherCourse}
+                label="What would you like to create a course on?"
+              />
+            )}
+
+            {whitelistedCourses.includes(formData.course) ? (
+              <Select
+                options={formData.course === 'Product manufacturing' ?  productanufacturingOptions : technologyOptions}
+                value={formData.topic}
+                onChange={(e) => setFormData({...formData, topic: e.target.value})}
+                error={errors.topics}
+                label={`${formData.course} - What are the topics you would like to learn about?`}
+              />
+            ) : <div />}
 
             <button
               type="submit"

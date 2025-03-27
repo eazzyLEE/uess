@@ -263,3 +263,47 @@ export const countryOptions = [
   if (b === 'Nigeria') return 1;
   return a.localeCompare(b);
 });
+
+export const productanufacturingOptions = [
+  'Car wash liquid',
+  'Hand washing soap',
+  'Detergent',
+  'Bar soap',
+  'Tiles cleaner',
+  'Rat killer',
+  'Rat gum',
+  'Insecticide',
+  'Air freshener',
+  'Methylated spirit',
+  'Coconut oil',
+  'Glue',
+  'Hand sanitizer',
+  'Toilet cleaner',
+  'Bleach',
+  'Nail polish remover',
+  'Perfume',
+]
+
+export const technologyOptions = [
+  'Frontend and backend development',
+  'Cyber security',
+  'Digital marketing',
+  'Web design',
+  'Graphics design',
+  'Email marketing',
+  'Social media marketing',
+  'Copy writing',
+  'Content creation and marketing',
+  'Video editing',
+  'Excel'
+]
+
+export const whitelistedCourses = ['Product manufacturing', 'Technology']
+
+export const recordingOptions = [
+  'PDF slides with my VoiceOver doing the explanation ',
+  'Explanatory video with my face showing',
+  'Practical video with hands and face showing',
+  'All of the above'
+]
+
