@@ -5,7 +5,6 @@ import { Modal } from '@/components/ui/Modal'
 import { Poppins } from 'next/font/google'
 import Navbar from '@/components/ui/Navbar'
 import PersonalInformation from './forms/PersonalInformation'
-import Mentorship from './forms/Mentorship'
 
 const poppins = Poppins({
   weight: ['400', '600', '700'],
@@ -18,14 +17,15 @@ export default function Mentors() {
     email: '',
     phone: '',
     gender: '',
-    age: '',
+    dateOfBirth: '',
     interests: '',
     school: '',
     yearOfGraduation: '',
     country: '',
     partnerMessage: '',
     numberOfStudents: '',
-    career: ''
+    career: '',
+    otherCareerPath: ''
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [showModal, setShowModal] = useState(false)
@@ -51,7 +51,7 @@ export default function Mentors() {
     setFormData({
       fullName: '',
       email: '',
-      age: '',
+      dateOfBirth: '',
       gender: '',
       phone: '',
       interests: '',
@@ -60,20 +60,14 @@ export default function Mentors() {
       country: '',
       partnerMessage: "",
       numberOfStudents: "",
-      career: ""
+      career: "",
+      otherCareerPath: ""
     })
     setErrors({})
   }
 
   const renderForm = () => {
-    switch (step) {
-      // case 1:
-      //   return <PersonalInformation formData={formData} setFormData={setFormData} errors={errors} setErrors={setErrors} />
-      case 2:
-        return <Mentorship formData={formData} setFormData={setFormData} errors={errors} setErrors={setErrors} />
-      default:
-        return <PersonalInformation formData={formData} setFormData={setFormData} errors={errors} setErrors={setErrors} />
-    }
+    return <PersonalInformation formData={formData} setFormData={setFormData} errors={errors} setErrors={setErrors} />
   }
 
   const handleNextStep = () => {
@@ -84,9 +78,6 @@ export default function Mentors() {
     }
   }
 
-  const pageTitle = step === 1 ? 'Personal Information' : 'Mentorship Data'
-
-  const buttonText = 'Next'
 
   return (
     <div className={poppins.className}>
@@ -96,7 +87,7 @@ export default function Mentors() {
         <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
           <h2 className="text-2xl font-bold mb-2 text-center text-gray-800">Mentor Form</h2>
 
-          <h4 className="text-lg mb-6 text-center text-gray-600">{pageTitle} - {step}/2</h4>
+          {/* <h4 className="text-lg mb-6 text-center text-gray-600">{pageTitle} - {step}/2</h4> */}
           
           <form onSubmit={handleSubmit} className="space-y-4">
 
@@ -108,7 +99,7 @@ export default function Mentors() {
               className="w-full bg-blue-500 text-white py-2 px-4 mt-2 rounded-md hover:bg-blue-600 transition-colors"
               onClick={handleNextStep}
             >
-              {buttonText}
+              Submit
             </button>
           </form>
         </div>

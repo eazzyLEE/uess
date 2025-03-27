@@ -1,7 +1,7 @@
 type FormData = {
   fullName: string
   gender: string
-  age: string
+  dateOfBirth: string
   email: string
   phone: string
   interests: string
@@ -11,6 +11,7 @@ type FormData = {
   partnerMessage: string
   numberOfStudents: string
   career: string
+  otherCareerPath: string
 }
 
 export type Form = {

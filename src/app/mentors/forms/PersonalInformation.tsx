@@ -1,7 +1,7 @@
 import { Input } from '@/components/ui/Input'
 import { Select } from '@/components/ui/Select'
-import { TextArea } from '@/components/ui/TextArea'
-import { ageOptions, genderOptions, schools } from '../../constants'
+// import { TextArea } from '@/components/ui/TextArea'
+import { careerOptions, countryOptions, genderOptions, schools } from '../../constants'
 import { Form } from './types'
 
 export default function PersonalInformation({formData, setFormData, errors}: Form) {
@@ -9,7 +9,7 @@ export default function PersonalInformation({formData, setFormData, errors}: For
     <div className="space-y-4">
       <Input
         type="text"
-        placeholder="Full Name"
+        placeholder="Full Name (Surname first)"
         value={formData.fullName}
         onChange={(e) => setFormData({...formData, fullName: e.target.value})}
         error={errors.fullName}
@@ -24,12 +24,13 @@ export default function PersonalInformation({formData, setFormData, errors}: For
         label="Gender"
       />
 
-      <Select
-        options={ageOptions}
-        value={formData.age}
-        onChange={(e) => setFormData({...formData, age: e.target.value})}
-        error={errors.age}
-        label="Age"
+      <Input
+        type="date"
+        value={formData.dateOfBirth}
+        onChange={(e) => setFormData({...formData, dateOfBirth: e.target.value})}
+        error={errors.dateOfBirth}
+        label="Date of Birth"
+        max={"2014-01-01"}
       />
 
       <Input
@@ -50,15 +51,6 @@ export default function PersonalInformation({formData, setFormData, errors}: For
         label="Phone Number"
       />
 
-      {/* <TextArea
-        placeholder="Areas of Interest"
-        value={formData.interests}
-        onChange={(e) => setFormData({...formData, interests: e.target.value})}
-        error={errors.interests}
-        rows={3}
-        label="Areas of Interest"
-      /> */}
-
       <Select
         options={schools}
         value={formData.school}
@@ -76,23 +68,42 @@ export default function PersonalInformation({formData, setFormData, errors}: For
         label="Year of Graduation"
       />
 
-      <Input
-        type="text"
-        placeholder="Country of Residence"
+      <Select
+        options={countryOptions}
         value={formData.country}
         onChange={(e) => setFormData({...formData, country: e.target.value})}
         error={errors.currentJob}
         label="Country of Residence"
       />
-
-      <TextArea
-        placeholder=""
-        value={formData.partnerMessage}
-        onChange={(e) => setFormData({...formData, partnerMessage: e.target.value})}
-        error={errors.message}
-        rows={3}
-        label="How would you like to partner with us?"
+      
+      <Input
+        type="number"
+        placeholder="1 - 3"
+        value={formData.numberOfStudents}
+        onChange={(e) => setFormData({...formData, numberOfStudents: e.target.value})}
+        error={errors.numberOfStudents}
+        label="How many students can you mentor?"
+        max={3}
+        min={1}
       />
+    
+      <Select
+        options={careerOptions}
+        value={formData.career}
+        onChange={(e) => setFormData({...formData, career: e.target.value})}
+        error={errors.career}
+        label="What career paths are you interested in mentoring in?"
+        subtext='This will help us match you with the right mentee'
+      />
+
+      {formData.career === "Other" && (
+        <Input
+          value={formData.otherCareerPath}
+          onChange={(e) => setFormData({...formData, otherCareerPath: e.target.value})}
+          error={errors.otherCareerPath}
+          label="Specify what career path are you interested in"
+        />
+      )}
     </div>
   )
 }
