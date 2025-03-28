@@ -8,6 +8,9 @@ import { Poppins } from 'next/font/google'
 import Navbar from '@/components/ui/Navbar'
 import { careerOptions, courseOptions, productanufacturingOptions, schools, technologyOptions, whitelistedCourses } from '../constants'
 import { TextArea } from '@/components/ui/TextArea'
+import { validateEmail, validatePhoneNumber } from '../utils'
+import { Button } from '@/components/ui/Button'
+import { api } from '@/utils/api'
 
 const poppins = Poppins({
   weight: ['400', '600', '700'],
@@ -16,17 +19,12 @@ const poppins = Poppins({
 
 export default function Students() {
   const [formData, setFormData] = useState({
-    type: '',
     fullName: '',
     email: '',
     phone: '',
     gender: '',
     dateOfBirth: '',
-    interests: '',
     school: '',
-    yearOfGraduation: '',
-    country: '',
-    partnerMessage: '',
     career: '',
     otherCareerPath: '',
     course: '',
@@ -35,9 +33,9 @@ export default function Students() {
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [showModal, setShowModal] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const genderOptions = [
-    'Select Gender',
     'Male',
     'Female',
   ]
@@ -46,29 +44,34 @@ export default function Students() {
     e.preventDefault()
     const newErrors: Record<string, string> = {}
 
-    if (!formData.type) newErrors.type = 'Please select your status'
     if (!formData.fullName.trim()) newErrors.fullName = 'Full name is required'
-    if (!formData.interests.trim()) newErrors.interests = 'Please enter your interests'
-    if (!formData.school || formData.school === 'Select School') newErrors.school = 'Please select your school'
+    else if (!formData.email) newErrors.email = 'Email address is required'
+    else if (!validateEmail(formData.email)) newErrors.email = 'Invalid email address'
+    else if (!formData.gender) newErrors.gender = 'Please select your gender'
+    else if (!formData.dateOfBirth) newErrors.dateOfBirth = 'Date of birth is required'
+    else if (!formData.phone) newErrors.phone = 'Phone number is required'
+    else if (!validatePhoneNumber(formData.phone)) newErrors.phone = 'Invalid phone number'
+    else if (!formData.school || formData.school === 'Select School') newErrors.school = 'Please select your school'
+    else if (!formData.career) newErrors.career = 'Please select your career path'
+    else if (formData.career === 'Other' && !formData.otherCareerPath) newErrors.otherCareerPath = 'Please specify your career path'
+    else if (!formData.course) newErrors.course = 'Please select your course'
+    else if (formData.course === 'Other' && !formData.otherCourse) newErrors.otherCourse = 'Please specify your course'
+    else if (formData.course && whitelistedCourses.includes(formData.course) && !formData.topic) newErrors.topic = 'Please select your topic'
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors)
       return
     }
 
+    setIsLoading(true)
     setShowModal(true)
     setFormData({
-      type: '',
       fullName: '',
       email: '',
       dateOfBirth: '',
       gender: '',
       phone: '',
-      interests: '',
       school: '',
-      yearOfGraduation: '',
-      country: '',
-      partnerMessage: "",
       career: '',
       otherCareerPath: '',
       course: '',
@@ -76,8 +79,34 @@ export default function Students() {
       topic: ''
     })
     setErrors({})
-  }
 
+    const payload = {
+      full_name: formData.fullName,
+      email: formData.email,
+      phone: formData.phone,
+      gender: formData.gender,
+      date_of_birth: new Date(formData.dateOfBirth).toISOString(),
+      type: "STUDENT",
+      response: {
+        school: formData.school,
+        career_path: formData.career,
+        career_path_extra: formData.otherCareerPath,
+        course: formData.course,
+        course_extra: formData.otherCourse,
+        course_topic: formData.topic,
+      }
+    }
+    console.log('payload', payload)
+    
+    api('POST', '/users/save-response', payload).then((res) => {
+      console.log('response', res)
+    }).catch((err) => {
+      console.log('error', err)
+    }).finally(() => {
+      setIsLoading(false)
+    })
+  }
+console.log('showModal', showModal)
   return (
     <div className={poppins.className}>
       <Navbar />
@@ -97,6 +126,15 @@ export default function Students() {
               label="Full Name"
             />
 
+            <Input
+              type="email"
+              placeholder="Email address"
+              value={formData.email}
+              onChange={(e) => setFormData({...formData, email: e.target.value})}
+              error={errors.email}
+              label="Email Address"
+            />
+
             <Select
               options={genderOptions}
               value={formData.gender}
@@ -112,15 +150,6 @@ export default function Students() {
               error={errors.dateOfBirth}
               label="Date of Birth"
               max={"2014-01-01"}
-            />
-
-            <Input
-              type="email"
-              placeholder="Email address"
-              value={formData.email}
-              onChange={(e) => setFormData({...formData, email: e.target.value})}
-              error={errors.email}
-              label="Email Address"
             />
 
             <Input
@@ -180,17 +209,12 @@ export default function Students() {
                 options={formData.course === 'Product manufacturing' ?  productanufacturingOptions : technologyOptions}
                 value={formData.topic}
                 onChange={(e) => setFormData({...formData, topic: e.target.value})}
-                error={errors.topics}
+                error={errors.topic}
                 label={`${formData.course} - What are the topics you would like to learn about?`}
               />
             ) : <div />}
 
-            <button
-              type="submit"
-              className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 mt-4 transition-colors"
-            >
-              Submit
-            </button>
+            <Button isLoading={isLoading}>Submit</Button>
           </form>
         </div>
 
