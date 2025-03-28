@@ -1,18 +1,12 @@
 import axios, { Method } from 'axios';
 
-// interface ApiRequestConfig extends AxiosRequestConfig {
-//   method: Method;
-//   endpoint: string;
-//   data?: Record<string, unknown>;
-// }
-
 interface ApiResponse<T = unknown> {
   data?: T;
   error?: string;
   status: number;
 }
 
-const baseUrl = 'http://localhost:5555'
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
 export async function api<T>(
   method: Method,
