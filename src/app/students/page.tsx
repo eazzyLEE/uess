@@ -218,7 +218,7 @@ console.log('showModal', showModal)
           onClose={() => setShowModal(false)}
           title="Success!"
         >
-          <p className="mb-4">Your information has been submitted successfully.</p>
+          <p className="mb-4 text-black">Your information has been submitted successfully.</p>
         </Modal>
       </div>
     </div>

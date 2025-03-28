@@ -8,7 +8,9 @@ import { Modal } from '@/components/ui/Modal'
 import { Poppins } from 'next/font/google'
 import Navbar from '@/components/ui/Navbar'
 import { countryOptions, courseOptions, productanufacturingOptions, technologyOptions, whitelistedCourses, recordingOptions } from '../constants'
-
+import { validatePhoneNumber } from '../utils'
+import { validateEmail } from '../utils'
+import { saveFormResponse } from '@/utils'
 const poppins = Poppins({
   weight: ['400', '600', '700'],
   subsets: ['latin'],
@@ -39,10 +41,17 @@ export default function Creators() {
     const newErrors: Record<string, string> = {}
 
     if (!formData.fullName.trim()) newErrors.fullName = 'Full name is required'
-    if (!formData.email.trim()) newErrors.email = 'Email is required'
-    if (!formData.phone.trim()) newErrors.phone = 'Phone number is required'
-    if (!formData.course.trim()) newErrors.course = 'Please select a course'
-    if (!formData.interests.trim()) newErrors.interests = 'Please enter your interests'
+    else if (!formData.email.trim()) newErrors.email = 'Email is required'
+    else if (!validateEmail(formData.email)) newErrors.email = 'Invalid email address'  
+    else if (!formData.phone.trim()) newErrors.phone = 'Phone number is required'
+    else if (!validatePhoneNumber(formData.phone)) newErrors.phone = 'Invalid phone number'
+    else if (!formData.country) newErrors.country = 'Country is required'
+    else if (!formData.course.trim()) newErrors.course = 'Please select a course'
+    else if (formData.course === 'Other' && !formData.otherCourse) newErrors.otherCourse = 'Please specify your course'
+    else if (formData.course && whitelistedCourses.includes(formData.course) && !formData.topic) newErrors.topic = 'Please select your topic'
+    else if (!formData.recording) newErrors.recording = 'Please select your recording option'
+    else if (!formData.requiresAssistanceWithContent) newErrors.requiresAssistanceWithContent = 'This field is required'
+    else if (!formData.requiresAssistanceWithModules) newErrors.requiresAssistanceWithModules = 'This field is required'
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors)
@@ -67,6 +76,28 @@ export default function Creators() {
       recording: ''
     })
     setErrors({})
+
+    const payload = {
+      full_name: formData.fullName,
+      email: formData.email,
+      phone: formData.phone,
+      country: formData.country,
+      type: "CREATOR",
+      response: {
+        course: formData.course,
+        course_extra: formData.otherCourse,
+        course_topic: formData.topic,
+        course_recording_model: formData.recording,
+        requires_assistance_with_content: formData.requiresAssistanceWithContent === 'Yes',
+        requires_assistance_with_modules: formData.requiresAssistanceWithModules === 'Yes',
+      }
+    }
+
+    saveFormResponse(payload).then((res) => {
+      console.log('response', res)
+    }).catch((err) => {
+      console.log('error', err)
+    })
   }
 
   return (
@@ -181,7 +212,7 @@ export default function Creators() {
           onClose={() => setShowModal(false)}
           title="Success!"
         >
-          <p className="mb-4">Your information has been submitted successfully.</p>
+          <p className="mb-4 text-black">Your information has been submitted successfully.</p>
         </Modal>
       </div>
     </div>
