@@ -4,11 +4,9 @@ type FormData = {
   dateOfBirth: string
   email: string
   phone: string
-  interests: string
   school: string
   yearOfGraduation: string
   country: string
-  partnerMessage: string
   numberOfStudents: string
   career: string
   otherCareerPath: string

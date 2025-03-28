@@ -5,6 +5,8 @@ import { Modal } from '@/components/ui/Modal'
 import { Poppins } from 'next/font/google'
 import Navbar from '@/components/ui/Navbar'
 import PersonalInformation from './forms/PersonalInformation'
+import { validateEmail, validatePhoneNumber } from '../utils'
+import { saveFormResponse } from '@/utils'
 
 const poppins = Poppins({
   weight: ['400', '600', '700'],
@@ -18,11 +20,9 @@ export default function Mentors() {
     phone: '',
     gender: '',
     dateOfBirth: '',
-    interests: '',
     school: '',
     yearOfGraduation: '',
     country: '',
-    partnerMessage: '',
     numberOfStudents: '',
     career: '',
     otherCareerPath: ''
@@ -37,10 +37,22 @@ export default function Mentors() {
     e.preventDefault()
     const newErrors: Record<string, string> = {}
 
-    // if (!formData.type) newErrors.type = 'Please select your status'
     if (!formData.fullName.trim()) newErrors.fullName = 'Full name is required'
-    if (!formData.interests.trim()) newErrors.interests = 'Please enter your interests'
-    if (!formData.school || formData.school === 'Select School') newErrors.school = 'Please select your school'
+    else if (!formData.gender) newErrors.gender = 'Please select your gender'
+    else if (!formData.dateOfBirth) newErrors.dateOfBirth = 'Date of birth is required'
+    else if (!formData.email) newErrors.email = 'Email address is required'
+    else if (!validateEmail(formData.email)) newErrors.email = 'Invalid email address'
+       else if (!formData.phone) newErrors.phone = 'Phone number is required'
+    else if (!validatePhoneNumber(formData.phone)) newErrors.phone = 'Invalid phone number'
+    else if (!formData.school || formData.school === 'Select School') newErrors.school = 'Please select your school'
+    else if (!formData.yearOfGraduation) newErrors.yearOfGraduation = 'Year of graduation is required'
+    else if (!formData.country) newErrors.country = 'Country is required'
+    else if (!formData.numberOfStudents) newErrors.numberOfStudents = 'Number of students is required'
+    else if (isNaN(Number(formData.numberOfStudents))) newErrors.numberOfStudents = 'Number of students must be a number'
+    else if (Number(formData.numberOfStudents) < 1 || Number(formData.numberOfStudents) > 3) newErrors.numberOfStudents = 'Number of students must be between 1 and 3'
+    else if (!formData.career) newErrors.career = 'Please select your career path'
+    else if (formData.career === 'Other' && !formData.otherCareerPath) newErrors.otherCareerPath = 'Please specify your career path'
+    
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors)
@@ -54,16 +66,40 @@ export default function Mentors() {
       dateOfBirth: '',
       gender: '',
       phone: '',
-      interests: '',
       school: '',
       yearOfGraduation: '',
       country: '',
-      partnerMessage: "",
       numberOfStudents: "",
       career: "",
       otherCareerPath: ""
     })
     setErrors({})
+
+    const payload = {
+      full_name: formData.fullName,
+      email: formData.email,
+      phone: formData.phone,
+      gender: formData.gender,
+      date_of_birth: new Date(formData.dateOfBirth).toISOString(),
+      country: formData.country,
+      type: "MENTOR",
+      response: {
+        school: formData.school,
+        year_of_graduation: formData.yearOfGraduation,
+        preferred_number_of_mentees: Number(formData.numberOfStudents),
+        career_path: formData.career,
+        career_path_extra: formData.otherCareerPath,
+      }
+    }
+    console.log('payload', payload)
+
+    saveFormResponse(payload).then((res) => {
+      console.log('response', res)
+    }).catch((err) => {
+      console.log('error', err)
+    }).finally(() => {
+      setShowModal(true)
+    })
   }
 
   const renderForm = () => {
@@ -109,7 +145,7 @@ export default function Mentors() {
           onClose={() => setShowModal(false)}
           title="Success!"
         >
-          <p className="mb-4">Your information has been submitted successfully.</p>
+          <p className="mb-4 text-black">Your information has been submitted successfully.</p>
         </Modal>
       </div>
     </div>

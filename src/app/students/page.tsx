@@ -6,7 +6,7 @@ import { Select } from '@/components/ui/Select'
 import { Modal } from '@/components/ui/Modal'
 import { Poppins } from 'next/font/google'
 import Navbar from '@/components/ui/Navbar'
-import { careerOptions, courseOptions, productanufacturingOptions, schools, technologyOptions, whitelistedCourses } from '../constants'
+import { careerOptions, courseOptions, genderOptions, productanufacturingOptions, schools, technologyOptions, whitelistedCourses } from '../constants'
 import { TextArea } from '@/components/ui/TextArea'
 import { validateEmail, validatePhoneNumber } from '../utils'
 import { Button } from '@/components/ui/Button'
@@ -34,11 +34,6 @@ export default function Students() {
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [showModal, setShowModal] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-
-  const genderOptions = [
-    'Male',
-    'Female',
-  ]
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()

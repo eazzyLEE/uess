@@ -3,7 +3,6 @@ export const schools = [
 ]
 
 export const genderOptions = [
-  'Select Gender',
   'Male',
   'Female',
 ]
