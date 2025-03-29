@@ -30,8 +30,14 @@ export default function Mentors() {
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [showModal, setShowModal] = useState(false)
   const [step, setStep] = useState(1)
+  const [isError, setIsError] = useState(false)
+  const [message, setMessage] = useState('')
 
-
+  const closeModal = () => {
+    setShowModal(false)
+    setIsError(false)
+    setMessage('')
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -59,7 +65,6 @@ export default function Mentors() {
       return
     }
 
-    setShowModal(true)
     setFormData({
       fullName: '',
       email: '',
@@ -97,6 +102,8 @@ export default function Mentors() {
       console.log('response', res)
     }).catch((err) => {
       console.log('error', err)
+      setIsError(true)
+      setMessage(err?.message)
     }).finally(() => {
       setShowModal(true)
     })
@@ -142,8 +149,9 @@ export default function Mentors() {
 
         <Modal
           isOpen={showModal}
-          onClose={() => setShowModal(false)}
-          title="Success!"
+          onClose={closeModal}
+          isError={isError}
+          message={message}
         >
           <p className="mb-4 text-black">Your information has been submitted successfully.</p>
         </Modal>

@@ -6,39 +6,34 @@ interface ApiResponse<T = unknown> {
   status: number;
 }
 
-const baseUrl = 'https://uess-server-4111d20e5a69.herokuapp.com' // process.env.NEXT_PUBLIC_BASE_URL
+const baseUrl = 'http://localhost:5555' // 'https://uess-server-4111d20e5a69.herokuapp.com' // process.env.NEXT_PUBLIC_BASE_URL
 
 export async function api<T>(
   method: Method,
   endpoint: string,
   data: Record<string, unknown>): Promise<ApiResponse<T>> {
-  try {
-    const response = await axios({
-      method,
-      url: `${baseUrl}${endpoint}`,
-      data: method !== 'GET' ? data : undefined,
-      params: method === 'GET' ? data : undefined,
-      headers: {
-        'Content-Type': 'application/json',
-        // ...config.headers,
-      },
-      // ...config,
+    return new Promise((resolve, reject) => {
+      axios({
+        method: method,
+        url: `${baseUrl}${endpoint}`,
+        data,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(res => {
+          console.log('amin res', res);
+          resolve(res?.data || res);
+        })
+        .catch(error => {
+          console.log('ERR%', error);
+          if (error && !error.response) {
+            console.log(
+              'Could not connect to the server, please check your internet connection',
+            );
+            reject(new Error());
+          }
+          reject(error.response?.data);
+        });
     });
-
-    return {
-      data: response.data,
-      status: response.status,
-    };
-  } catch (error) {
-    if (axios.isAxiosError(error) && error.response) {
-      return {
-        error: error.response.data.message || 'Something went wrong',
-        status: error.response.status,
-      };
-    }
-    return {
-      error: 'Network error occurred',
-      status: 500,
-    };
-  }
 } 
