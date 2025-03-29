@@ -7,7 +7,7 @@ interface ApiResponse<T = unknown> {
 }
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
-console.log('baseUrl', baseUrl)
+console.log('baseUrl', baseUrl, 'main base', process.env.BASE_URL)
 
 export async function api<T>(
   method: Method,
