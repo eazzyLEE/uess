@@ -6,8 +6,7 @@ interface ApiResponse<T = unknown> {
   status: number;
 }
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
-console.log('baseUrl', baseUrl, 'main base', process.env.BASE_URL)
+const baseUrl = 'https://uess-server-4111d20e5a69.herokuapp.com/' // process.env.NEXT_PUBLIC_BASE_URL
 
 export async function api<T>(
   method: Method,
