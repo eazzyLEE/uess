@@ -114,6 +114,24 @@ export default function HomePage() {
               </Link>
             </div>
           </div>
+
+          {/* Connect with ABENOL Foundation */}
+          <div className="max-w-4xl mx-auto px-4 py-16 text-center">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              Connect with ABENOL Foundation
+            </h2>
+            <p className="text-gray-700 mb-6">
+              To learn more about ABENOL Foundation and our other initiatives, please visit our official website:
+            </p>
+            <a 
+              href="https://abenolfoundation.org" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="inline-block bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition-colors font-semibold"
+            >
+              Visit ABENOL Foundation Website
+            </a>
+          </div>
         </div>
       </div>
     </div>
