@@ -12,7 +12,7 @@ export default function HomePage() {
   return (
     <div className={poppins.className}>
       {/* Navigation */}
-      <Navbar homepage={true} />
+      <Navbar />
 
       {/* Hero Section */}
       <div className="min-h-screen bg-gradient-to-br from-blue-100 via-white to-purple-100">

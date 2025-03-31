@@ -1,76 +1,69 @@
-import Navbar from "@/components/ui/Navbar";
+import { Poppins } from 'next/font/google'
+import Navbar from '@/components/ui/Navbar'
 
-export default function Info() {
+const poppins = Poppins({
+  weight: ['400', '600', '700'],
+  subsets: ['latin'],
+})
+
+export default function About() {
   return (
-    <>
+    <div className={poppins.className}>
       <Navbar />
-      <div className="min-h-screen bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-indigo-100 via-slate-50 to-teal-100 pt-24 pb-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto space-y-8">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-teal-600 text-transparent bg-clip-text text-center">
-            UESS Project - BU Alumni Partnership
+      
+      <div className="min-h-screen bg-gradient-to-br from-blue-100 via-white to-purple-100 pt-24 pb-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">
+            Empowering Nigeria&apos;s Future: The UESS Vision
           </h1>
 
-          <div className="bg-white/80 backdrop-blur-sm rounded-lg shadow-lg p-8 space-y-6">
-            <h2 className="text-2xl font-semibold text-indigo-800">
-              Undergraduate Empowerment and Sensitization Scheme
-            </h2>
-
-            <div className="space-y-4 text-gray-700">
-              <p className="italic">Dear Fellow Babcock Alumnus,</p>
-
-              <p>
-                As a proud alumnus of Babcock University (Class of 2015) and nation builder with series of successful impact projects, 
-                I&apos;m reaching out to you today with an exciting opportunity to support the development of the next generation of leaders 
-                and entrepreneurs from our esteemed institution.
+          <div className="bg-white rounded-lg shadow-md p-6 md:p-8 space-y-6 text-gray-700">
+            <section>
+              <p className="leading-relaxed">
+                The Undergraduate Empowerment and Sensitization Scheme (UESS) is a transformative platform designed to bridge the gap between 
+                academia and industry, empowering Nigerian undergraduates with the skills, knowledge, and mentorship they need to thrive. We believe 
+                in building a generation of future leaders and entrepreneurs who can drive positive change in their communities and the nation.
               </p>
+            </section>
 
-              <p>
-                The UESS event is a dynamic, one-day experience held in tertiary institutions. It serves as an informal introduction 
-                to our life-changing services. Students can attend, learn about the opportunities we offer, and sign up to participate. 
-                We plan to bring UESS project to 20 institutions across Nigeria, aiming to empower a minimum of 100,000 undergraduates 
-                over the next 5 years.
+            <section>
+              <h2 className="text-xl font-semibold text-gray-900 mb-3">Our Mission</h2>
+              <p className="leading-relaxed">
+                Our core mission is to equip students with practical, in-demand skills through skillset training in product manufacturing, technology, 
+                and agriculture. We also provide crucial financial education to ensure students build sustainable financial habits and manage their 
+                resources effectively. Recognizing the power of guidance, we facilitate meaningful mentorship connections between students and 
+                experienced alumni, offering personalized support and career insights.
               </p>
+            </section>
 
-              <p>
-                UESS will be launching at our great alma mater. Our goal is to empower Babcock students with essential skills for the 
-                ever-evolving job market. We provide workshops, mentorship, and practical training in entrepreneurship, corporate skills, 
-                and financial literacy.
+            <section>
+              <h2 className="text-xl font-semibold text-gray-900 mb-3">Our Purpose</h2>
+              <p className="leading-relaxed">
+                The purpose behind UESS stems from the need to create a structured and accessible pathway for students to gain real-world experience 
+                and build valuable networks. By connecting students with mentors who have walked their path, we provide invaluable guidance and 
+                support. We also enable passionate individuals to share their knowledge through course creation, enriching the learning experience.
               </p>
+            </section>
 
-              <div className="mt-8">
-                <h3 className="text-xl font-semibold text-indigo-700 mb-3">Partnership Opportunities:</h3>
-                <ul className="list-disc list-inside space-y-1 ml-4">
-                  <li>Becoming a Mentor</li>
-                  <li>Become a course creator</li>
-                  <li>Goodwill Partnership / Corporate Social Initiative (CSI) Collaboration</li>
-                </ul>
-              </div>
-
-              <div className="mt-8">
-                <h3 className="text-xl font-semibold text-indigo-700 mb-3">Benefits of Partnership:</h3>
-                <ul className="list-disc list-inside space-y-1 ml-4">
-                  <li>Give back to your alma mater</li>
-                  <li>Contribute to a worthy cause</li>
-                  <li>Access a talent pool</li>
-                  <li>Strengthen your brand image (CSI partnership)</li>
-                </ul>
-              </div>
-
-              <p className="mt-8">
-                We believe that with your support, UESS can have a transformative impact on the lives of Babcock students. 
-                  Together, let&apos;s empower the next generation of leaders from Babcock University!
+            <section>
+              <h2 className="text-xl font-semibold text-gray-900 mb-3">Benefits</h2>
+              <p className="leading-relaxed">
+                UESS benefits students by providing free access to critical skills training, financial literacy, and mentorship, ultimately boosting their 
+                employability and entrepreneurial potential. Mentors gain the satisfaction of giving back to their alma mater and shaping the next 
+                generation. Course creators contribute to building a powerful learning community, while expanding their reach and impact.
               </p>
+            </section>
 
-              <div className="mt-8 pt-4 border-t border-gray-200">
-                <p className="italic">Best regards,</p>
-                <p className="font-semibold">Eromosele &apos;Eromz&apos; Adene</p>
-                <p>Director,</p>
-                <p>ABENOL FOUNDATION LTD/GTE</p>
-              </div>
-            </div>
+            <section>
+              <h2 className="text-xl font-semibold text-gray-900 mb-3">Our Goal</h2>
+              <p className="leading-relaxed">
+                Our goal is to empower 100,000 undergraduates across 20 higher institutions in the next five years, creating a ripple effect of positive 
+                change throughout Nigeria.
+              </p>
+            </section>
           </div>
         </div>
       </div>
-    </>
-  );
+    </div>
+  )
 }
