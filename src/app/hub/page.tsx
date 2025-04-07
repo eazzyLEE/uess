@@ -7,28 +7,7 @@ import { ChevronLeft, ChevronRight, Users, Pencil, GraduationCap, UserCog, X, Ho
 import Navbar from '@/components/ui/Navbar'
 import { getMetrics, getUsers } from '@/utils'
 import moment from 'moment'
-
-interface User {
-  id: string
-  full_name: string
-  email: string
-  type: string
-  created_at: string
-  gender: string
-}
-
-interface Metrics {
-  totalUsers: number
-  students: number
-  creators: number
-  mentors: number
-}
-
-interface Meta {
-  totalPages: number
-  nextPage: number
-  totalCount: number
-}
+import { User, Metrics, Meta, MentorResponse, StudentResponse, CreatorResponse } from './types'
 
 const NAVIGATION_ITEMS = [
   { id: 'home', label: 'Home', icon: Home },
@@ -137,6 +116,52 @@ export default function Dashboard() {
       setType('')
     }
   }
+
+  const userResponse = (user: User) => {
+    if (!user) {
+      return {}
+    }
+    if (user.type === 'STUDENT') {
+      return user.student_response
+    } else if (user.type === 'CREATOR') {
+      return user.creator_response
+    }
+      return user.mentor_response
+  }
+
+  const formatQuestion = (question: string) => {
+    return question.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())
+  }
+
+  const formatResponse = (response: string | boolean | number | null) => {
+    if (typeof response === 'string') {
+      return response
+    } else if (response === true) {
+      return 'Yes'
+    } else if (response === false) {
+      return 'No'
+    } else if (response === null) {
+      return 'N/A'
+    }
+    return response
+  }
+
+  const formatResponseEntries = (selectedUser: User) => {
+    const blacklist = ['id', 'user_id', 'created_at', 'updated_at']
+    console.log('id', selectedUser?.id, 'userResponse(selectedUser)', userResponse(selectedUser))
+    const validKeys = Object.keys(userResponse(selectedUser) || {}).filter((key) => {
+      if (blacklist.includes(key)) {
+        return false
+      }
+        return true
+    })
+
+    return validKeys.reduce((acc, key) => {
+      acc[key as keyof (MentorResponse | StudentResponse | CreatorResponse)] = userResponse(selectedUser)[key as keyof (MentorResponse | StudentResponse | CreatorResponse | unknown)]
+      return acc
+    }, {} as Record<string, string | boolean | number | null>)
+  }
+  console.log('formatResponseEntries', formatResponseEntries(users[0]))
 
   const itemsPerPage = 10
 
@@ -342,7 +367,13 @@ export default function Dashboard() {
 
               {selectedUser && (
                 <div className="space-y-4">
-                  <div>
+                  {Object.entries(formatResponseEntries(selectedUser)).map(([key, value]) => (
+                    <div key={key}>
+                      <label className="text-sm font-medium text-gray-500">{formatQuestion(key)}</label>
+                      <p className="mt-1 font-medium text-gray-900">{formatResponse(value)}</p>
+                    </div>
+                  ))}
+                  {/* <div>
                     <label className="text-sm font-medium text-gray-500">Name</label>
                     <p className="mt-1 font-medium text-gray-900">{selectedUser.full_name}</p>
                   </div>
@@ -361,7 +392,7 @@ export default function Dashboard() {
                   <div>
                     <label className="text-sm font-medium text-gray-500">Gender</label>
                     <p className="mt-1 text-gray-700">{selectedUser.gender}</p>
-                  </div>
+                  </div> */}
                 </div>
               )}
             </div>
