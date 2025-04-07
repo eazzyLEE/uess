@@ -1,17 +1,12 @@
-import axios, { Method } from 'axios';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import axios, { AxiosResponse, Method } from 'axios';
 
-interface ApiResponse<T = unknown> {
-  data?: T;
-  error?: string;
-  status: number;
-}
+const baseUrl = 'https://uess-server-4111d20e5a69.herokuapp.com' // 
 
-const baseUrl = 'https://uess-server-4111d20e5a69.herokuapp.com' // process.env.NEXT_PUBLIC_BASE_URL
-
-export async function api<T>(
+export async function api(
   method: Method,
   endpoint: string,
-  data: Record<string, unknown>): Promise<ApiResponse<T>> {
+  data?: Record<string, unknown>): Promise<AxiosResponse | any> {
     return new Promise((resolve, reject) => {
       axios({
         method: method,
@@ -22,7 +17,6 @@ export async function api<T>(
         },
       })
         .then(res => {
-          console.log('amin res', res);
           resolve(res?.data || res);
         })
         .catch(error => {
