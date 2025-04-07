@@ -176,6 +176,31 @@ export default function Dashboard() {
     </div>
   )
 
+  // Render table row with alternating colors
+  const renderTableRow = (user: User, index: number, showActions: boolean = true) => (
+    <TableRow 
+      key={user.id} 
+      className={`${index % 2 === 0 ? 'bg-gray-50/50' : 'bg-white'} hover:bg-blue-50/30 transition-colors`}
+    >
+      <TableCell className="font-medium text-gray-900">{user.full_name}</TableCell>
+      <TableCell className="text-gray-600">{user.email}</TableCell>
+      <TableCell>{renderUserTypePill(user.type)}</TableCell>
+      <TableCell className="text-gray-600">{dateJoined(user.created_at)}</TableCell>
+      {showActions && (
+        <TableCell>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => handleUserClick(user)}
+            className="hover:bg-blue-50"
+          >
+            View Details
+          </Button>
+        </TableCell>
+      )}
+    </TableRow>
+  )
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
@@ -235,62 +260,39 @@ export default function Dashboard() {
                 <h2 className="text-lg font-medium text-gray-900 mb-4">Recent Activity</h2>
                 <Table>
                   <TableHeader>
-                    <TableRow>
-                      <TableHead>Name</TableHead>
-                      <TableHead>Email</TableHead>
-                      <TableHead>Type</TableHead>
-                      <TableHead>Date Joined</TableHead>
+                    <TableRow className="bg-gray-100">
+                      <TableHead className="text-gray-700 font-semibold">Name</TableHead>
+                      <TableHead className="text-gray-700 font-semibold">Email</TableHead>
+                      <TableHead className="text-gray-700 font-semibold">Type</TableHead>
+                      <TableHead className="text-gray-700 font-semibold">Date Joined</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {users.slice(0, 5).map((user) => (
-                      <TableRow key={user.id}>
-                        <TableCell>{user.full_name}</TableCell>
-                        <TableCell>{user.email}</TableCell>
-                        <TableCell>{renderUserTypePill(user.type)}</TableCell>
-                        <TableCell>{dateJoined(user.created_at)}</TableCell>
-                      </TableRow>
-                    ))}
+                    {users.slice(0, 5).map((user, index) => renderTableRow(user, index, false))}
                   </TableBody>
                 </Table>
               </div>
             </div>
           ) : (
-            <div className="bg-white rounded-lg shadow">
+            <div className="bg-white rounded-lg shadow overflow-hidden">
               <Table>
                 <TableHeader>
-                  <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Email</TableHead>
-                    <TableHead>Type</TableHead>
-                    <TableHead>Date Joined</TableHead>
-                    <TableHead>Actions</TableHead>
+                  <TableRow className="bg-gray-100">
+                    <TableHead className="text-gray-700 font-semibold">Name</TableHead>
+                    <TableHead className="text-gray-700 font-semibold">Email</TableHead>
+                    <TableHead className="text-gray-700 font-semibold">Type</TableHead>
+                    <TableHead className="text-gray-700 font-semibold">Date Joined</TableHead>
+                    <TableHead className="text-gray-700 font-semibold">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {currentData
                     .filter(user => currentSection === 'users' || user.type.toLowerCase() === currentSection.slice(0, -1))
-                    .map((user) => (
-                      <TableRow key={user.id}>
-                        <TableCell>{user.full_name}</TableCell>
-                        <TableCell>{user.email}</TableCell>
-                        <TableCell>{renderUserTypePill(user.type)}</TableCell>
-                        <TableCell>{dateJoined(user.created_at)}</TableCell>
-                        <TableCell>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => handleUserClick(user)}
-                          >
-                            View Details
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                    ))}
+                    .map((user, index) => renderTableRow(user, index))}
                 </TableBody>
               </Table>
 
-              <div className="flex items-center justify-between px-4 py-3 border-t">
+              <div className="flex items-center justify-between px-4 py-3 border-t bg-gray-50">
                 <div className="text-sm text-gray-700">
                   Showing {(currentPage - 1) * itemsPerPage + 1} to{' '}
                   {Math.min(currentPage * itemsPerPage, meta.totalCount)} of{' '}
@@ -302,6 +304,7 @@ export default function Dashboard() {
                     size="sm"
                     onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                     disabled={currentPage === 1}
+                    className="hover:bg-blue-50"
                   >
                     <ChevronLeft className="h-4 w-4" />
                   </Button>
@@ -310,6 +313,7 @@ export default function Dashboard() {
                     size="sm"
                     onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                     disabled={currentPage === totalPages}
+                    className="hover:bg-blue-50"
                   >
                     <ChevronRight className="h-4 w-4" />
                   </Button>
@@ -340,11 +344,11 @@ export default function Dashboard() {
                 <div className="space-y-4">
                   <div>
                     <label className="text-sm font-medium text-gray-500">Name</label>
-                    <p className="mt-1">{selectedUser.full_name}</p>
+                    <p className="mt-1 font-medium text-gray-900">{selectedUser.full_name}</p>
                   </div>
                   <div>
                     <label className="text-sm font-medium text-gray-500">Email</label>
-                    <p className="mt-1">{selectedUser.email}</p>
+                    <p className="mt-1 text-gray-700">{selectedUser.email}</p>
                   </div>
                   <div>
                     <label className="text-sm font-medium text-gray-500">Type</label>
@@ -352,11 +356,11 @@ export default function Dashboard() {
                   </div>
                   <div>
                     <label className="text-sm font-medium text-gray-500">Date Joined</label>
-                    <p className="mt-1">{dateJoined(selectedUser.created_at)}</p>
+                    <p className="mt-1 text-gray-700">{dateJoined(selectedUser.created_at)}</p>
                   </div>
                   <div>
                     <label className="text-sm font-medium text-gray-500">Gender</label>
-                    <p className="mt-1">{selectedUser.gender}</p>
+                    <p className="mt-1 text-gray-700">{selectedUser.gender}</p>
                   </div>
                 </div>
               )}
