@@ -19,3 +19,8 @@ export const getMetrics = async () => {
   const response = await api('GET', '/users/metrics')
   return response
 }
+
+export const exportCsvApi = async (type: string) => {
+  const response = await api('GET', `/users/export?type=${type}`)
+  return response
+}

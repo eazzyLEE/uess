@@ -3,11 +3,12 @@
 import { useEffect, useState } from 'react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/Table'
 import { Button } from '@/components/ui/Button'
-import { ChevronLeft, ChevronRight, Users, Pencil, GraduationCap, UserCog, X, Home, Loader2 } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Users, Pencil, GraduationCap, UserCog, X, Home, Loader2, Download } from 'lucide-react'
 import Navbar from '@/components/ui/Navbar'
-import { getMetrics, getUsers } from '@/utils'
+import { exportCsvApi, getMetrics, getUsers } from '@/utils'
 import moment from 'moment'
 import { User, Metrics, Meta, MentorResponse, StudentResponse, CreatorResponse } from './types'
+import { downloadCSV } from './utils'
 
 const NAVIGATION_ITEMS = [
   { id: 'home', label: 'Home', icon: Home },
@@ -184,6 +185,18 @@ export default function Dashboard() {
     setIsDetailsSidebarOpen(true)
   }
 
+  const exportCsv = async () => {
+    try {
+      setIsLoading(true)
+      const response = await exportCsvApi(type)
+      downloadCSV(type, response.data)
+    } catch (error) {
+      console.error('Error exporting CSV:', error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   // Render user type pill
   const renderUserTypePill = (userType: string) => {
     const typeKey = userType.toUpperCase() as keyof typeof USER_TYPE_STYLES
@@ -292,7 +305,18 @@ export default function Dashboard() {
               </div>
               
               <div className="bg-white rounded-lg shadow p-6">
-                <h2 className="text-lg font-medium text-gray-900 mb-4">Recent Activity</h2>
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-lg font-medium text-gray-900">Recent Activity</h2>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                        onClick={exportCsv}
+                    className="flex items-center gap-1 hover:bg-blue-50 text-black"
+                  >
+                    <Download className="h-4 w-4" />
+                    Export CSV
+                  </Button>
+                </div>
                 <Table>
                   <TableHeader>
                     <TableRow className="bg-gray-100">
@@ -310,6 +334,20 @@ export default function Dashboard() {
             </div>
           ) : (
             <div className="bg-white rounded-lg shadow overflow-hidden">
+              <div className="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h2 className="text-lg font-medium text-gray-900">
+                  {currentSection.charAt(0).toUpperCase() + currentSection.slice(1)}
+                </h2>
+                <Button
+                  variant="outline"
+                  size="sm"
+                    onClick={exportCsv}
+                  className="flex items-center gap-1 hover:bg-blue-50 text-black"
+                >
+                  <Download className="h-4 w-4" />
+                  Export CSV
+                </Button>
+              </div>
               <Table>
                 <TableHeader>
                   <TableRow className="bg-gray-100">
