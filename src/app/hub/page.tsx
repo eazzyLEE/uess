@@ -307,15 +307,6 @@ export default function Dashboard() {
               <div className="bg-white rounded-lg shadow p-6">
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-lg font-medium text-gray-900">Recent Activity</h2>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                        onClick={exportCsv}
-                    className="flex items-center gap-1 hover:bg-blue-50 text-black"
-                  >
-                    <Download className="h-4 w-4" />
-                    Export CSV
-                  </Button>
                 </div>
                 <Table>
                   <TableHeader>

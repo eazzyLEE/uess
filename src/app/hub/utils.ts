@@ -48,7 +48,7 @@ export const downloadCSV = (selection: string, csv: string) => {
   
   // Set up the download
   link.setAttribute('href', url)
-  link.setAttribute('download', `${selection.toLowerCase()}s_${moment().format('YYYY-MM-DD')}.csv`)
+  link.setAttribute('download', `${selection.toLowerCase() || 'user'}s_${moment().format('YYYY-MM-DD')}.csv`)
   link.style.visibility = 'hidden'
   
   // Add to document, click, and remove
