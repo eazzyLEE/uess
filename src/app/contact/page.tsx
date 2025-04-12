@@ -30,7 +30,7 @@ export default function Contact() {
                   href="mailto:info@abenolfoundation.org"
                   className="text-blue-600 hover:text-blue-700 transition-colors"
                 >
-                  info@abenolfoundation.org
+                  uess@abenolfoundation.org
                 </Link>
               </div>
 

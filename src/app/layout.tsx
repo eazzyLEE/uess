@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "UESS Project - Babcock University Alumni Partnership",
-  description: "Join our community of Babcock University alumni and students to support the development of the next generation of leaders.",
+  title: "UESS Tour",
+  description: "Join the UESS Community. Free Skills Training, Expert Mentorship, and Financial Education for Nigerian Undergraduates.",
 };
 
 export default function RootLayout({

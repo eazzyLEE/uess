@@ -65,7 +65,6 @@ export default function Dashboard() {
     try {
       setIsLoading(true)
       const response = await getUsers(page, type)
-      console.log('user response', response)
       setUsers(response.data)
       setMeta({
         totalPages: response.totalPages,
@@ -88,7 +87,6 @@ export default function Dashboard() {
         students: response.data.metrics.STUDENT,
         creators: response.data.metrics.CREATOR,
       })
-      console.log('metrics response', response)
     } catch (error) {
       console.error('Error fetching metrics:', error)
     } finally {
@@ -101,7 +99,6 @@ export default function Dashboard() {
     fetchMetrics()
   }, [currentPage, type])
 
-  console.log('users', users)
 
   const handleSelection = (item: string) => {
     setCurrentSection(item)
@@ -148,7 +145,6 @@ export default function Dashboard() {
 
   const formatResponseEntries = (selectedUser: User) => {
     const blacklist = ['id', 'user_id', 'created_at', 'updated_at']
-    console.log('id', selectedUser?.id, 'userResponse(selectedUser)', userResponse(selectedUser))
     const validKeys = Object.keys(userResponse(selectedUser) || {}).filter((key) => {
       if (blacklist.includes(key)) {
         return false
@@ -156,12 +152,26 @@ export default function Dashboard() {
         return true
     })
 
-    return validKeys.reduce((acc, key) => {
+    const newObj = validKeys.reduce((acc, key) => {
       acc[key as keyof (MentorResponse | StudentResponse | CreatorResponse)] = userResponse(selectedUser)[key as keyof (MentorResponse | StudentResponse | CreatorResponse | unknown)]
       return acc
     }, {} as Record<string, string | boolean | number | null>)
+
+    const additionalKeys = ['gender', 'date_of_birth', 'phone', 'country']
+    const obj: { [key: string]: string } = {}
+
+    for (const key of additionalKeys) {
+      if (selectedUser && selectedUser[key as keyof User]) {
+        if (key === 'date_of_birth') {
+          obj[key] = moment(selectedUser[key as keyof User] as string).format('DD MMM YYYY')
+        } else {
+          obj[key] = selectedUser[key as keyof User] as string
+        }
+      }
+    }
+
+    return Object.assign(newObj, obj)
   }
-  console.log('formatResponseEntries', formatResponseEntries(users[0]))
 
   const itemsPerPage = 10
 
@@ -192,7 +202,7 @@ export default function Dashboard() {
       <div className="flex items-center justify-between">
         <div>
           <p className="text-sm font-medium text-gray-500">{title}</p>
-          <p className="text-2xl font-semibold mt-1">{value}</p>
+          <p className="text-2xl text-black font-semibold mt-1">{value}</p>
         </div>
         <div className="p-2 bg-white/80 rounded-full">
           {icon}
@@ -217,7 +227,7 @@ export default function Dashboard() {
             variant="outline"
             size="sm"
             onClick={() => handleUserClick(user)}
-            className="hover:bg-blue-50"
+            className="hover:bg-blue-50 text-black"
           >
             View Details
           </Button>
@@ -331,7 +341,7 @@ export default function Dashboard() {
                     disabled={currentPage === 1}
                     className="hover:bg-blue-50"
                   >
-                    <ChevronLeft className="h-4 w-4" />
+                    <ChevronLeft className="h-4 w-4 text-black" />
                   </Button>
                   <Button
                     variant="outline"
@@ -340,7 +350,7 @@ export default function Dashboard() {
                     disabled={currentPage === totalPages}
                     className="hover:bg-blue-50"
                   >
-                    <ChevronRight className="h-4 w-4" />
+                    <ChevronRight className="h-4 w-4 text-black" />
                   </Button>
                 </div>
               </div>
@@ -355,13 +365,13 @@ export default function Dashboard() {
           <div className="h-full overflow-y-auto">
             <div className="p-6 mt-16">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-semibold">User Details</h2>
+                <h2 className="text-xl font-semibold text-black">User Details</h2>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => setIsDetailsSidebarOpen(false)}
                 >
-                  <X className="h-5 w-5" />
+                  <X className="h-5 w-5 text-black" />
                 </Button>
               </div>
 
@@ -373,26 +383,6 @@ export default function Dashboard() {
                       <p className="mt-1 font-medium text-gray-900">{formatResponse(value)}</p>
                     </div>
                   ))}
-                  {/* <div>
-                    <label className="text-sm font-medium text-gray-500">Name</label>
-                    <p className="mt-1 font-medium text-gray-900">{selectedUser.full_name}</p>
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium text-gray-500">Email</label>
-                    <p className="mt-1 text-gray-700">{selectedUser.email}</p>
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium text-gray-500">Type</label>
-                    <p className="mt-1">{renderUserTypePill(selectedUser.type)}</p>
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium text-gray-500">Date Joined</label>
-                    <p className="mt-1 text-gray-700">{dateJoined(selectedUser.created_at)}</p>
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium text-gray-500">Gender</label>
-                    <p className="mt-1 text-gray-700">{selectedUser.gender}</p>
-                  </div> */}
                 </div>
               )}
             </div>
