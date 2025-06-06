@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 import Navbar from '@/components/ui/Navbar';
 import React from 'react';
+import Faq from '../faq/faq';
 
 const poppins = Poppins({
   weight: ['400', '600', '700'],
@@ -185,6 +186,7 @@ const LandingPage = () => {
               </a>
             </div>
           </div>
+          <Faq />
         </div>
       </div>
     </section>
