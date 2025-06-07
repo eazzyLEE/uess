@@ -40,11 +40,11 @@ const Faq = () => {
                 </div>
                 {showFaq === id && (
                   <div>
-                    <p>{answer}</p>
-                    <ul className='grid pt-2'>
-                      <li>{slot1}</li>
-                      <li>{slot2}</li>
-                      <li>{slot3}</li>
+                    <p className='text-black opacity-100 '>{answer}</p>
+                    <ul className='grid pt-2 text-gray-900'>
+                      <li className='text-black opacity-100 '>{slot1}</li>
+                      <li className='text-black opacity-100 '>{slot2}</li>
+                      <li className='text-black opacity-100 '>{slot3}</li>
                     </ul>
                   </div>
                 )}
