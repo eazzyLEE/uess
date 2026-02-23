@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosResponse, Method } from 'axios';
 
-const baseUrl = 'https://uess-server-4111d20e5a69.herokuapp.com' // 
+const baseUrl = 'https://uess-server-production.up.railway.app' // 
 
 export async function api(
   method: Method,
