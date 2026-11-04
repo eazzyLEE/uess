@@ -27,7 +27,7 @@ const Faq = () => {
                 className=' grid shadow-2xl bg-white rounded-2xl  p-4'
               >
                 <div className='grid grid-flow-col justify-between'>
-                  <p className='text-md  md:text-xl text-transparent bg-clip-text  font-bold bg-gradient-to-r from-blue-600 to-purple-600  mb-2'>
+                  <p className='text-md  md:text-lg   font-semibold text-black mb-2'>
                     {question}
                   </p>
                   <span onClick={() => toggleFaq(id)}>

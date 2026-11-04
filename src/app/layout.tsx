@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "UESS Tour",
   description: "Join the UESS Community. Free Skills Training, Expert Mentorship, and Financial Education for Nigerian Undergraduates.",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
