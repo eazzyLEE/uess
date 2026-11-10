@@ -1,5 +1,6 @@
 export const schools = [
   'Babcock University',
+  "Caleb University",
 ]
 
 export const genderOptions = [

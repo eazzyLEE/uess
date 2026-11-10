@@ -1,7 +1,8 @@
 'use client';
-import { FAQ_SCHEMA } from '@/components/constants/faq';
+
 import Icon from '@/components/ui/icons';
 import { ICONS } from '@/components/ui/icons/types';
+import { FAQ_SCHEMA } from '@/utils/faq';
 
 import { useState } from 'react';
 import React from 'react';
