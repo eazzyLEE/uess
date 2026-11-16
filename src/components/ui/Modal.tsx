@@ -8,7 +8,6 @@ interface ModalProps {
 
 export function Modal({ isOpen, onClose, isError, message }: ModalProps) {
   if (!isOpen) return null;
-  console.log('error message', message)
 
   const title = isError ? 'Error' : 'Success'
   return (

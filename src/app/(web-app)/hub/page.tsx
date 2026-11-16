@@ -72,8 +72,7 @@ export default function Dashboard() {
         nextPage: response.nextPage,
         totalCount: response.totalCount,
       })
-    } catch (error) {
-      console.error('Error fetching users:', error)
+    } catch {
     } finally {
       setIsLoading(false)
     }
@@ -88,8 +87,7 @@ export default function Dashboard() {
         students: response.data.metrics.STUDENT,
         creators: response.data.metrics.CREATOR,
       })
-    } catch (error) {
-      console.error('Error fetching metrics:', error)
+    } catch {
     } finally {
       setIsLoading(false)
     }
@@ -190,8 +188,7 @@ export default function Dashboard() {
       setIsLoading(true)
       const response = await exportCsvApi(type)
       downloadCSV(type, response.data)
-    } catch (error) {
-      console.error('Error exporting CSV:', error)
+    } catch {
     } finally {
       setIsLoading(false)
     }

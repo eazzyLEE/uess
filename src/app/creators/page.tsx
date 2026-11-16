@@ -100,10 +100,7 @@ export default function Creators() {
       }
     }
 
-    saveFormResponse(payload).then((res) => {
-      console.log('response', res)
-    }).catch((err) => {
-      console.log('error', err)
+    saveFormResponse(payload).catch((err) => {
       setIsError(true)
       setMessage(err?.message)
     }).finally(() => {

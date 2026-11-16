@@ -104,14 +104,8 @@ export default function Mentors() {
         career_path_extra: formData.otherCareerPath,
       },
     };
-    console.log('payload', payload);
-
     saveFormResponse(payload)
-      .then((res) => {
-        console.log('response', res);
-      })
       .catch((err) => {
-        console.log('error', err);
         setIsError(true);
         setMessage(err?.message);
       })

@@ -99,12 +99,7 @@ export default function Students() {
         course_topic: formData.topic,
       }
     }
-    console.log('payload', payload)
-    
-    api('POST', '/users/save-response', payload).then((res) => {
-      console.log('response', res)
-    }).catch((err) => {
-      console.log('error', err)
+    api('POST', '/users/save-response', payload).catch((err) => {
       setIsError(true)
       setMessage(err?.message)
     }).finally(() => {
@@ -112,7 +107,6 @@ export default function Students() {
       setShowModal(true)
     })
   }
-console.log('showModal', showModal)
 
   return (
     <div className={poppins.className}>

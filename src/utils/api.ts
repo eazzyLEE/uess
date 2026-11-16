@@ -32,17 +32,14 @@ export async function api(
           resolve(res?.data || res);
         })
         .catch(error => {
-          console.log('ERR%', error);
           if (error?.response?.status === 401 && typeof window !== 'undefined') {
             localStorage.removeItem(AUTH_TOKEN_KEY);
             window.location.href = '/hub/login';
             return;
           }
           if (error && !error.response) {
-            console.log(
-              'Could not connect to the server, please check your internet connection',
-            );
             reject(new Error());
+            return;
           }
           reject(error.response?.data);
         });
