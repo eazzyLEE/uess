@@ -42,12 +42,12 @@ export default function Donate() {
             </div>
           </section>
 
-          <section className='mt-10 rounded-2xl bg-[#103724] p-6 text-white md:p-10'>
+          <section className='mt-10 rounded-2xl bg-gradient-to-br from-blue-700 to-purple-700 p-6 text-white md:p-10'>
             <div className='max-w-3xl'>
               <h2 className='text-3xl md:text-4xl font-bold leading-tight'>
                 Help us build a stronger generation of Nigerian graduates
               </h2>
-              <p className='mt-4 leading-7 text-green-100'>
+              <p className='mt-4 leading-7 text-blue-50'>
                 Every contribution supports practical education and mentorship
                 that help undergraduates prepare for careers, entrepreneurship,
                 and responsible financial decisions.
@@ -57,17 +57,17 @@ export default function Donate() {
             <div className='mt-8 grid gap-4 lg:grid-cols-3'>
               <div className='rounded-2xl border border-white/20 bg-white/10 p-6'>
                 <p className='text-xl font-bold'>Wema Bank</p>
-                <p className='mt-4 text-green-100'>
+                <p className='mt-4 text-blue-100'>
                   Account Name:{' '}
                   <span className='font-semibold text-white'>
                     ABENOL Foundation LTD/GTE
                   </span>
                 </p>
-                <p className='mt-3 text-green-100'>
+                <p className='mt-3 text-blue-100'>
                   NGN Account:{' '}
                   <span className='font-bold text-white'>0125016610</span>
                 </p>
-                <p className='mt-2 text-green-100'>
+                <p className='mt-2 text-blue-100'>
                   USD Account:{' '}
                   <span className='font-bold text-white'>0621392779</span>
                 </p>
@@ -75,25 +75,25 @@ export default function Donate() {
 
               <div className='rounded-2xl border border-white/20 bg-white/10 p-6'>
                 <p className='text-xl font-bold'>Union Bank</p>
-                <p className='mt-4 text-green-100'>
+                <p className='mt-4 text-blue-100'>
                   Account Name:{' '}
                   <span className='font-semibold text-white'>
                     ABENOL Foundation LTD/GTE
                   </span>
                 </p>
-                <p className='mt-3 text-green-100'>
+                <p className='mt-3 text-blue-100'>
                   NGN Account:{' '}
                   <span className='font-bold text-white'>0203588698</span>
                 </p>
-                <p className='mt-2 text-green-100'>
+                <p className='mt-2 text-blue-100'>
                   USD Account:{' '}
                   <span className='font-bold text-white'>0203744430</span>
                 </p>
-                <p className='mt-2 text-green-100'>
+                <p className='mt-2 text-blue-100'>
                   GBP Account:{' '}
                   <span className='font-bold text-white'>0203745097</span>
                 </p>
-                <p className='mt-2 text-green-100'>
+                <p className='mt-2 text-blue-100'>
                   EUR Account:{' '}
                   <span className='font-bold text-white'>0203745932</span>
                 </p>
@@ -101,12 +101,12 @@ export default function Donate() {
 
               <div className='rounded-2xl border border-white/20 bg-white/10 p-6'>
                 <p className='text-xl font-bold'>Flutterwave</p>
-                <p className='mt-4 text-green-100'>Secure online donation</p>
+                <p className='mt-4 text-blue-100'>Secure online donation</p>
                 <a
                   href='https://bit.ly/donatetoABENOL'
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='mt-3 inline-block font-bold underline underline-offset-4 hover:text-green-100'
+                  className='mt-3 inline-block font-bold underline underline-offset-4 hover:text-blue-100'
                 >
                   Donate with Flutterwave
                 </a>
@@ -116,7 +116,7 @@ export default function Donate() {
             <div className='mt-8 flex flex-col gap-3 sm:flex-row'>
               <Link
                 href='/contact'
-                className='inline-flex items-center justify-center rounded-lg bg-white px-6 py-3 font-bold text-[#103724] transition-colors hover:bg-green-100'
+                className='inline-flex items-center justify-center rounded-lg bg-white px-6 py-3 font-bold text-blue-800 transition-colors hover:bg-blue-50'
               >
                 Contact the UESS Team
               </Link>
