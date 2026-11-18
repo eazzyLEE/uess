@@ -1,244 +1,246 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import {
-  Check,
-  Crown,
-  Gem,
-  Heart,
-  Sparkles,
-  type LucideIcon,
-} from 'lucide-react';
+import { useState } from "react";
+import { Check, Crown, Gem, Handshake, Heart, Sparkles } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import { SOCIAL_LINKS } from "@/utils/constants/socials";
+
+export const DONATE_URL = "https://bit.ly/donatetoABENOL";
 
 type Plan = {
   id: string;
   name: string;
   amount: number;
-  description: string;
-  impact: string[];
+  tagline: string;
+  perks: string[];
   icon: LucideIcon;
   popular?: boolean;
 };
 
 const plans: Plan[] = [
   {
-    id: 'starter',
-    name: 'The Spark',
+    id: "starter",
+    name: "The Spark",
     amount: 1000,
-    description: 'A practical way to get started supporting UESS students.',
-    impact: [
-      'Contribute to free learning resources for undergraduates.',
-      'Help students access practical skills and financial education.',
-      'Support connections between students and experienced mentors.',
+    tagline: "If 1,000 people donate ₦1,000 monthly, here is what we can do.",
+    perks: [
+      "8 months of free pads - a girl gets to stay in class, not at home.",
+      "One borehole — a village stops walking miles for water.",
+      "One surgery —a child gets the chance to live.",
+      "Sponsor 3 months mentorship for secondary school students",
     ],
     icon: Heart,
   },
   {
-    id: 'supporter',
-    name: 'The Builder',
+    id: "supporter",
+    name: "The Builder",
     amount: 5000,
-    description: 'Help more students make progress on their learning journey.',
-    impact: [
-      'Help develop practical course materials and training.',
-      'Support mentorship matching and student guidance.',
-      'Contribute to UESS learning activities at partner institutions.',
+    tagline: "If 1,000 people donate ₦5,000 monthly, here is what we can do.",
+    perks: [
+      "12 months of free pads — a girl gets to stay in class, not at home.",
+      "3 boreholes — clean water reaches 3 communities for good.",
+      "3 surgeries — 3 children get the chance to live.",
+      "One university empowered — a whole campus of students mentored.",
+      "3 months of mentorship — teenagers guided away from shortcuts.",
     ],
     icon: Sparkles,
     popular: true,
   },
   {
-    id: 'champion',
-    name: 'The Changemaker',
+    id: "champion",
+    name: "The Changemaker",
     amount: 10000,
-    description: 'Invest in practical skills and guidance for future graduates.',
-    impact: [
-      'Contribute to training in technology, product manufacturing, and agriculture.',
-      'Help provide financial education and career-readiness resources.',
-      'Support one-to-one guidance from experienced alumni mentors.',
+    tagline: "If 1,000 people donate ₦10,000 monthly, here is what we can do.",
+    perks: [
+      "12 months of free pads — a girl gets to stay in class, not at home.",
+      "5 boreholes across the country — clean water where it's needed most.",
+      "5 surgeries, in private and public hospitals — no child turned away.",
+      "2 universities empowered — mentorship reaching further.",
+      "9 months of mentorship — teenagers guided away from shortcuts across Nigeria.",
+      "6 months of active Youth civic sensitisation programs.",
     ],
     icon: Crown,
   },
   {
-    id: 'legacy',
-    name: 'The Legacy Circle',
+    id: "legend",
+    name: "The Legacy Circle",
     amount: 50000,
-    description: 'Make a larger contribution to UESS student empowerment.',
-    impact: [
-      'Help sustain free courses and practical learning resources.',
-      'Support mentorship and financial education for undergraduates.',
-      'Contribute to extending UESS activities across partner institutions.',
+    tagline: "If 1,000 people donate ₦50,000 monthly, here is what we can do.",
+    perks: [
+      "12 months of free pads — a girl gets to stay in class, not at home.",
+      "10 boreholes across the country — clean water becomes routine.",
+      "10 surgeries, in private and public hospitals — no child turned away.",
+      "9 universities empowered — a nationwide mentorship movement.",
+      "12 months of mentorship — teenagers guided away from shortcuts across Nigeria.",
+      "12 months of active Youth civic sensitisation programs.",
+      "Grants for 10 retired teachers with small businesses",
     ],
     icon: Gem,
   },
 ];
 
-const naira = new Intl.NumberFormat('en-NG', {
-  style: 'currency',
-  currency: 'NGN',
+const naira = new Intl.NumberFormat("en-NG", {
+  style: "currency",
+  currency: "NGN",
   maximumFractionDigits: 0,
 });
 
-export default function DonateContent() {
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const selected = plans.find((plan) => plan.id === selectedId);
+export default function PartnerPlans() {
+  const [selectedId, setSelectedId] = useState(
+    plans.find((plan) => plan.popular)?.id ?? plans[0].id,
+  );
+  const selected = plans.find((plan) => plan.id === selectedId) ?? plans[0];
 
   return (
-    <main className='min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 px-4 pb-16 pt-24 sm:px-6 lg:px-8'>
-      <div className='mx-auto max-w-6xl'>
-        <header className='mx-auto max-w-3xl text-center'>
-          <p className='text-sm font-semibold uppercase tracking-wider text-blue-700'>
-            Support UESS
-          </p>
-          <h1 className='mt-3 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl'>
-            Invest in a student&apos;s future
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 px-4 pb-20 pt-24 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl">
+        <header className="mx-auto max-w-5xl pt-12 text-center md:pt-16">
+          <span className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white/80 px-4 py-2 text-sm font-semibold text-blue-700 shadow-sm">
+            <Handshake aria-hidden="true" size={18} />
+            Partner with ABENOL Foundation
+          </span>
+          <h1 className="mx-auto mt-6 max-w-4xl text-4xl font-bold leading-tight tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
+            Give a Little Every Month,Change a Life, All Year.
           </h1>
-          <p className='mt-5 text-lg leading-relaxed text-gray-600'>
-            Your contribution helps the Undergraduate Empowerment and
-            Sensitization Scheme provide Nigerian undergraduates with free
-            practical skills training, financial education, and access to
-            experienced mentors.
+          <p className="mx-auto mt-6 max-w-3xl text-base leading-7 text-gray-600 sm:text-lg sm:leading-8">
+            The ABENOL Giving Circle - a monthly gift that quietly becomes a
+            borehole, a surgery, the reason hundreds of teenage girls never miss
+            school, the empowerment for thousands of undergraduates in higher
+            institutions and so much more. Your gift, your legacy.
           </p>
         </header>
 
-        <section
-          aria-labelledby='contribution-heading'
-          className='mt-10 rounded-3xl bg-gradient-to-br from-blue-700 to-purple-700 p-6 text-white shadow-sm md:p-10'
-        >
-          <div className='mx-auto max-w-3xl text-center'>
-            <span className='mx-auto inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-white'>
-              <Heart aria-hidden='true' size={23} />
-            </span>
-            <h2
-              id='contribution-heading'
-              className='mt-4 text-2xl font-bold text-white sm:text-3xl'
+        <div className="mx-auto mt-12 grid max-w-5xl gap-5 md:grid-cols-2">
+        {plans.map((plan) => {
+          const isSelected = plan.id === selectedId;
+          const Icon = plan.icon;
+
+          return (
+            <button
+              key={plan.id}
+              type="button"
+              onClick={() => setSelectedId(plan.id)}
+              aria-pressed={isSelected}
+              className={`relative flex h-full flex-col rounded-2xl border bg-white p-7 text-left shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md ${
+                isSelected
+                  ? "border-blue-300 ring-2 ring-blue-100"
+                  : "border-gray-100 hover:border-blue-200"
+              }`}
             >
-              Choose a contribution
-            </h2>
-            <p className='mt-3 leading-7 text-blue-50'>
-              Select a suggested amount to see how your support can contribute
-              to UESS. Bank transfer details will appear after you choose.
-            </p>
-          </div>
+              {plan.popular && (
+                <span className="absolute -top-3 right-6 rounded-full bg-blue-700 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-white">
+                  Most popular
+                </span>
+              )}
 
-          <div className='mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
-            {plans.map(({ id, name, amount, icon: Icon, popular }) => {
-              const isSelected = selectedId === id;
-
-              return (
-                <button
-                  key={id}
-                  type='button'
-                  aria-pressed={isSelected}
-                  onClick={() => setSelectedId(id)}
-                  className={`relative flex h-full flex-col rounded-2xl border p-5 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 ${
+              <div className="flex items-center gap-3">
+                <span
+                  className={`flex size-10 items-center justify-center rounded-xl ${
                     isSelected
-                      ? 'border-blue-600 bg-blue-50 shadow-sm'
-                      : 'border-gray-200 bg-white hover:border-blue-300 hover:bg-gray-50'
+                      ? "bg-blue-600 text-white"
+                      : "bg-blue-50 text-blue-700"
                   }`}
                 >
-                  {popular && (
-                    <span className='absolute -top-3 right-4 rounded-full bg-blue-700 px-3 py-1 text-xs font-semibold text-white'>
-                      Popular
-                    </span>
-                  )}
-                  <span className='inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white text-blue-700 shadow-sm'>
-                    <Icon aria-hidden='true' size={21} />
-                  </span>
-                  <span className='mt-4 font-semibold text-gray-900'>{name}</span>
-                  <span className='mt-2 text-2xl font-bold text-gray-900'>
-                    {naira.format(amount)}
-                  </span>
-                  <span className='mt-auto flex items-center gap-2 pt-4 text-sm font-medium text-blue-700'>
-                    {isSelected ? (
-                      <>
-                        <Check aria-hidden='true' size={17} />
-                        Selected
-                      </>
-                    ) : (
-                      'Select this amount'
-                    )}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+                  <Icon aria-hidden="true" className="size-5" />
+                </span>
+                <h2 className="text-xl font-semibold text-gray-900">
+                  {plan.name}
+                </h2>
+              </div>
 
-          {selected ? (
-            <div
-              aria-live='polite'
-              className='mt-6 rounded-2xl border border-white/20 bg-white/10 p-5 sm:p-6'
-            >
-              <p className='text-sm font-semibold uppercase tracking-wider text-blue-100'>
-                {naira.format(selected.amount)} contribution
+              <div className="mt-5 flex items-baseline gap-1">
+                <span className="text-3xl font-bold tracking-tight text-gray-900">
+                  {naira.format(plan.amount)}
+                </span>
+                <span className="text-sm text-gray-500">
+                  /month
+                </span>
+              </div>
+
+              <p className="mt-2 text-sm leading-6 text-gray-600">
+                {plan.tagline}
               </p>
-              <p className='mt-2 text-lg font-semibold text-white'>
-                {selected.description}
-              </p>
-              <ul className='mt-4 grid gap-3 text-sm leading-6 text-blue-50 sm:grid-cols-2'>
-                {selected.impact.map((item) => (
-                  <li key={item} className='flex gap-2'>
+
+              <ul className="mt-5 space-y-2.5 text-sm leading-6 text-gray-700">
+                {plan.perks.map((perk) => (
+                  <li key={perk} className="flex items-start gap-2">
                     <Check
-                      aria-hidden='true'
-                      className='mt-1 shrink-0 text-blue-100'
-                      size={17}
+                      aria-hidden="true"
+                      className="mt-0.5 size-4 shrink-0 text-blue-700"
                     />
-                    <span>{item}</span>
+                    <span>{perk}</span>
                   </li>
                 ))}
               </ul>
 
-              <div className='mt-6 border-t border-white/20 pt-6'>
-                <h3 className='text-xl font-bold text-white'>
-                  Bank transfer details
-                </h3>
-                <p className='mt-2 leading-6 text-blue-50'>
-                  Suggested transfer amount (NGN):{' '}
-                  <strong>{naira.format(selected.amount)}</strong>. Include{' '}
-                  <strong>UESS</strong> as the transfer reference. For foreign
-                  currency transfers, use the matching currency account.
-                </p>
+              <span
+                className={`mt-6 inline-flex items-center gap-2 text-sm font-semibold ${
+                  isSelected ? "text-blue-700" : "text-gray-500"
+                }`}
+              >
+                <span
+                  className={`flex size-4 items-center justify-center rounded-full border ${
+                    isSelected
+                      ? "border-blue-600 bg-blue-600 text-white"
+                      : "border-gray-300"
+                  }`}
+                >
+                  {isSelected && (
+                    <Check aria-hidden="true" className="size-3" />
+                  )}
+                </span>
+                {isSelected ? "Selected" : "Select this tier"}
+              </span>
+            </button>
+          );
+        })}
+      </div>
 
-                <div className='mt-4 grid gap-4 md:grid-cols-2'>
-                  <article className='rounded-2xl bg-white p-5 text-gray-900'>
-                    <h4 className='text-lg font-bold'>Wema Bank</h4>
-                    <p className='mt-3 text-sm text-gray-600'>
-                      Account name
-                    </p>
-                    <p className='font-semibold'>ABENOL Foundation LTD/GTE</p>
-                    <p className='mt-3 text-sm text-gray-600'>NGN account</p>
-                    <p className='font-bold'>0125016610</p>
-                    <p className='mt-3 text-sm text-gray-600'>USD account</p>
-                    <p className='font-bold'>0621392779</p>
-                  </article>
-
-                  <article className='rounded-2xl bg-white p-5 text-gray-900'>
-                    <h4 className='text-lg font-bold'>Union Bank</h4>
-                    <p className='mt-3 text-sm text-gray-600'>
-                      Account name
-                    </p>
-                    <p className='font-semibold'>ABENOL Foundation LTD/GTE</p>
-                    <p className='mt-3 text-sm text-gray-600'>NGN account</p>
-                    <p className='font-bold'>0203588698</p>
-                    <p className='mt-3 text-sm text-gray-600'>USD account</p>
-                    <p className='font-bold'>0203744430</p>
-                    <p className='mt-3 text-sm text-gray-600'>GBP account</p>
-                    <p className='font-bold'>0203745097</p>
-                    <p className='mt-3 text-sm text-gray-600'>EUR account</p>
-                    <p className='font-bold'>0203745932</p>
-                  </article>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <p
-              aria-live='polite'
-              className='mt-6 rounded-2xl border border-white/20 bg-white/10 p-5 text-center text-blue-50'
-            >
-              Select a contribution amount above to see the bank transfer
-              details.
+        <div className="mx-auto mt-8 flex max-w-5xl flex-col gap-4 rounded-2xl border border-blue-100 bg-white p-6 shadow-sm md:flex-row md:items-center md:justify-between">
+          <div>
+            <p className="font-bold text-gray-900">
+              {selected.name} — {naira.format(selected.amount)} every month
             </p>
-          )}
-        </section>
+            <p className="mt-1 text-sm leading-6 text-gray-600">
+              You will be taken to our secure donation page to complete your
+              partnership.
+            </p>
+          </div>
+          <a
+            href={DONATE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-8 py-3 font-semibold text-white shadow-sm transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
+          >
+            <Heart aria-hidden="true" className="size-4" />
+            Donate
+          </a>
+        </div>
+
+        <div className="mx-auto mt-6 flex max-w-5xl flex-col items-center gap-4 rounded-2xl border border-blue-100 bg-white/70 p-6 text-center shadow-sm">
+          <div>
+            <p className="font-semibold text-gray-900">Follow the movement</p>
+            <p className="mt-1 text-sm leading-6 text-gray-600">
+              See where your partnership goes — follow ABENOL for updates from
+              the field.
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            {SOCIAL_LINKS.map(({ name, href, icon: Icon }) => (
+              <a
+                key={name}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={name}
+                title={name}
+                className="flex size-10 items-center justify-center rounded-full border border-gray-200 bg-white text-blue-700 transition-colors hover:border-blue-600 hover:bg-blue-600 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
+              >
+                <Icon aria-hidden="true" className="size-4" />
+              </a>
+            ))}
+          </div>
+        </div>
       </div>
     </main>
   );
