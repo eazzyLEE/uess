@@ -97,12 +97,7 @@ const Footer = () => {
               >
                 info@abenolfoundation.org
               </a>
-              <a
-                href='tel:+2347055066284'
-                className='block transition-colors hover:text-gray-900'
-              >
-                +234 (0) 705 506 6284
-              </a>
+             
               <p>Mon - Fri, 9:00am - 5:00pm</p>
             </div>
           </div>
