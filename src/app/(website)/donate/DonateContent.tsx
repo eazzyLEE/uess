@@ -242,6 +242,78 @@ export default function PartnerPlans() {
           </div>
         </div>
       </div>
+        <section className="mx-auto mt-16 max-w-5xl">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold tracking-tight text-[#141414] sm:text-4xl lg:text-5xl">
+              Support this wonderful dream
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl leading-7 text-[#141414]/80">
+              Support our mission to empower young Nigerians. Donate now and
+              be a part of the change.
+            </p>
+          </div>
+
+          <div className="mt-8 grid items-stretch gap-5 md:grid-cols-2 lg:grid-cols-3">
+            <div className="flex flex-col rounded-2xl border border-gray-100 bg-white p-6 shadow-lg sm:p-7">
+              <h3 className="text-2xl font-bold text-[#141414]">Wema Bank</h3>
+              <p className="mt-4 text-sm leading-6 text-[#141414]/80">
+                Account Name:
+                <span className="mt-1 block font-semibold text-[#141414]">
+                  ABENOL Foundation LTD/GTE
+                </span>
+              </p>
+              <dl className="mt-6 space-y-3 text-sm">
+                <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 border-t border-gray-100 pt-3">
+                  <dt className="text-[#141414]/80">Account Number (NGN)</dt>
+                  <dd className="font-bold text-[#141414]">0125016610</dd>
+                </div>
+                <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+                  <dt className="text-[#141414]/80">Account Number (USD)</dt>
+                  <dd className="font-bold text-[#141414]">0621392779</dd>
+                </div>
+              </dl>
+            </div>
+
+            <div className="flex flex-col rounded-2xl bg-[#80CFF1] p-6 shadow-lg sm:p-7">
+              <h3 className="text-2xl font-bold text-[#141414]">Union Bank</h3>
+              <p className="mt-4 text-sm leading-6 text-[#141414]/80">
+                Account Name:
+                <span className="mt-1 block font-semibold text-[#141414]">
+                  ABENOL Foundation LTD/GTE
+                </span>
+              </p>
+              <dl className="mt-6 space-y-3 text-sm">
+                {[
+                  ["Account Number (NGN)", "0203588698"],
+                  ["Account Number (USD)", "0203744430"],
+                  ["Account Number (GBP)", "0203745097"],
+                  ["Account Number (EUR)", "0203745932"],
+                ].map(([currency, account]) => (
+                  <div
+                    key={currency}
+                    className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 border-t border-[#141414]/10 pt-3"
+                  >
+                    <dt className="text-[#141414]/80">{currency}</dt>
+                    <dd className="font-bold text-[#141414]">{account}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+
+            <div className="flex flex-col rounded-2xl bg-[#262C55] p-6 shadow-lg sm:p-7 md:col-span-2 lg:col-span-1">
+              <h3 className="text-2xl font-bold text-white">Flutterwave</h3>
+              <p className="mt-4 text-sm text-white/80">Donation Link</p>
+              <a
+                className="mt-2 break-all font-bold text-white underline underline-offset-4 hover:text-blue-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                href={DONATE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                bit.ly/donatetoABENOL
+              </a>
+            </div>
+          </div>
+        </section>
     </main>
   );
 }
